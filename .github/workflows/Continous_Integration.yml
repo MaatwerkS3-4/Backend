@@ -15,5 +15,3 @@ jobs:
         java-version: 11
     - name: Build with Maven
       run: mvn -f Opinion/pom.xml package --file Opinion/pom.xml
-    - name: Run tests
-      run: mvn -f Opninion/pom.xml clean test
