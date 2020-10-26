@@ -18,7 +18,7 @@ public class OpinionApplication {
 	@Bean
 	CommandLineRunner runner(PostRepository repository){
 		return args -> {
-			repository.save(new Post("Potatoes"));
+			repository.save(new Post("Potatoes", 1));
 		};
 	}
 }
