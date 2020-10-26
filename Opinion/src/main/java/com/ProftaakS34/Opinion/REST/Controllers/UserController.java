@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(PostController.BASE_URL)
+@RequestMapping(UserController.BASE_URL)
 public class UserController {
 
     public static final String BASE_URL = "api/users";

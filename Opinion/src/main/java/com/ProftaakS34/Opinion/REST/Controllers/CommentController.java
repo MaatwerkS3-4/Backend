@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(PostController.BASE_URL)
+@RequestMapping(CommentController.BASE_URL)
 public class CommentController {
 
     public static final String BASE_URL = "api/comment";
