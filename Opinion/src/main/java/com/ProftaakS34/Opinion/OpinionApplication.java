@@ -1,7 +1,9 @@
 package com.ProftaakS34.Opinion;
 
 import com.ProftaakS34.Opinion.Data.Entities.Post;
+import com.ProftaakS34.Opinion.Data.Entities.User;
 import com.ProftaakS34.Opinion.Data.Repositories.PostRepository;
+import com.ProftaakS34.Opinion.Data.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,9 +18,10 @@ public class OpinionApplication {
 	}
 
 	@Bean
-	CommandLineRunner runner(PostRepository repository){
+	CommandLineRunner runner(PostRepository postRepository, UserRepository userRepository){
 		return args -> {
-			repository.save(new Post("Potatoes", 1));
+			userRepository.save(new User("Potatoman", "Yes"));
+			postRepository.save(new Post("Potatoes", userRepository.findById((long) 1.0).get()));
 		};
 	}
 }

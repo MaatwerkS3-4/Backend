@@ -4,6 +4,7 @@ import com.ProftaakS34.Opinion.Data.Entities.Comment;
 import com.ProftaakS34.Opinion.Data.Repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,8 +22,14 @@ public class CommentServiceImplementation implements CommentService{
     }
 
     @Override
-    public Comment findCommentByPostId(Long postId) {
-        return null;
+    public List<Comment> findCommentsByPostId(Long postId) {
+        List<Comment> results = new ArrayList<>();
+        for(Comment comment : commentRepository.findAll()){
+            if(comment.getPost().getId() == postId){
+                results.add(comment);
+            }
+        }
+        return results;
     }
 
     @Override

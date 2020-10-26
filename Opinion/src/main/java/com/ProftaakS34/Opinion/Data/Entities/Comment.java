@@ -10,11 +10,16 @@ public class Comment {
     @GeneratedValue
     private long id;
     private String content;
-    private long userId;
+    private User user;
+    private Post post;
 
-    public Comment(String content){
+    public Comment(String content, User user, Post post){
         this.content = content;
+        this.user = user;
+        this.post = post;
     }
+
+    public Comment(){}
 
     public long getId() {
         return id;
@@ -32,12 +37,20 @@ public class Comment {
         this.content = content;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     @Override

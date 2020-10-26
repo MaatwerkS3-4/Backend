@@ -10,7 +10,7 @@ public interface PostService {
 
     Post findPostBySubject(String subject);
 
-    Post findPostByPartialSubject(String partialSubject);
+    List<Post> findPostsByPartialSubject(String partialSubject);
 
     List<Post> findAllPosts();
 

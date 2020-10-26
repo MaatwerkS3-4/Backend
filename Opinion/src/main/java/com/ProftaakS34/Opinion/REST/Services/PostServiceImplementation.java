@@ -4,6 +4,7 @@ import com.ProftaakS34.Opinion.Data.Entities.Post;
 import com.ProftaakS34.Opinion.Data.Repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,13 +23,23 @@ public class PostServiceImplementation implements PostService {
 
     @Override
     public Post findPostBySubject(String subject) {
-
+        for(Post post : postRepository.findAll()){
+            if(post.getSubject().equals(subject)){
+                return post;
+            }
+        }
         return null;
     }
 
     @Override
-    public Post findPostByPartialSubject(String partialSubject) {
-        return null;
+    public List<Post> findPostsByPartialSubject(String partialSubject) {
+        List<Post> matches = new ArrayList<>();
+        for(Post post : postRepository.findAll()){
+            if(post.getSubject().contains(partialSubject)){
+                matches.add(post);
+            }
+        }
+        return matches;
     }
 
     @Override

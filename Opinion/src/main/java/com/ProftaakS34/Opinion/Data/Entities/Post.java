@@ -10,11 +10,15 @@ public class Post {
     @Id @GeneratedValue
     private long id;
     private String subject;
-    private long userId;
+    private User user;
 
-    public Post(String subject, long userId){
+    public Post(String subject, User user){
         this.subject = subject;
-        this.userId = userId;
+        this.user = user;
+    }
+
+    public Post(){
+
     }
 
     public long getId() {
@@ -33,12 +37,12 @@ public class Post {
         this.subject = subject;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

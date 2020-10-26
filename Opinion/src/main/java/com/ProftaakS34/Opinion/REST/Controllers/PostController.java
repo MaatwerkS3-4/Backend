@@ -37,7 +37,7 @@ public class PostController {
 
     @GetMapping("/partialString/{string}")
     public Post getPostByPartialSubject(@PathVariable String string){
-        return postService.findPostByPartialSubject(string);
+        return postService.findPostsByPartialSubject(string);
     }
 
     @PostMapping

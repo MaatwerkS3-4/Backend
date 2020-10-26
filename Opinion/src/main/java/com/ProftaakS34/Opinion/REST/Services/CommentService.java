@@ -8,7 +8,7 @@ public interface CommentService {
 
     Comment findCommentById(Long id);
 
-    Comment findCommentByPostId(Long postId);
+    List<Comment> findCommentsByPostId(Long postId);
 
     List<Comment> findAllComments();
 

@@ -1,7 +1,6 @@
 package com.ProftaakS34.Opinion.REST.Controllers;
 
 import com.ProftaakS34.Opinion.Data.Entities.Comment;
-import com.ProftaakS34.Opinion.Data.Entities.Post;
 import com.ProftaakS34.Opinion.REST.Services.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class CommentController {
 
     @GetMapping("/postId/{postId}")
     public Comment getCommentByPostId(@PathVariable Long postId){
-        return commentService.findCommentByPostId(postId);
+        return commentService.findCommentsByPostId(postId);
     }
 
     @PostMapping
