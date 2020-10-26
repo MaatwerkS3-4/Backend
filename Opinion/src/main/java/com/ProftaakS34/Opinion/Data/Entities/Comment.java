@@ -1,8 +1,10 @@
 package com.ProftaakS34.Opinion.Data.Entities;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@Entity
 public class Comment {
     @Id
     @GeneratedValue
