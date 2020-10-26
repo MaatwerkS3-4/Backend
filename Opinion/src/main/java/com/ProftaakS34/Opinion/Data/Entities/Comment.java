@@ -3,6 +3,7 @@ package com.ProftaakS34.Opinion.Data.Entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Comment {
@@ -10,7 +11,9 @@ public class Comment {
     @GeneratedValue
     private long id;
     private String content;
+    @ManyToOne
     private User user;
+    @ManyToOne
     private Post post;
 
     public Comment(String content, User user, Post post){
