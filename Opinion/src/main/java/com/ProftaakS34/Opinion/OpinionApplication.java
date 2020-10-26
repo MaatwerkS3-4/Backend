@@ -1,7 +1,11 @@
 package com.ProftaakS34.Opinion;
 
+import com.ProftaakS34.Opinion.Data.Entities.Comment;
 import com.ProftaakS34.Opinion.Data.Entities.Post;
+import com.ProftaakS34.Opinion.Data.Entities.User;
+import com.ProftaakS34.Opinion.Data.Repositories.CommentRepository;
 import com.ProftaakS34.Opinion.Data.Repositories.PostRepository;
+import com.ProftaakS34.Opinion.Data.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,9 +20,11 @@ public class OpinionApplication {
 	}
 
 	@Bean
-	CommandLineRunner runner(PostRepository repository){
+	CommandLineRunner runner(PostRepository postRepository, UserRepository userRepository, CommentRepository commentRepository){
 		return args -> {
-			repository.save(new Post("Potatoes"));
+			userRepository.save(new User("Potatoman", "Yes"));
+			postRepository.save(new Post("Potatoes", userRepository.findById((long) 1.0).get()));
+			commentRepository.save(new Comment("I like potatoes", userRepository.findById((long) 1.0).get(), postRepository.findById((long) 2.0).get()));
 		};
 	}
 }

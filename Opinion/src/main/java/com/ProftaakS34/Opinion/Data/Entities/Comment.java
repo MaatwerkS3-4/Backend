@@ -6,22 +6,23 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Post {
-
-    @Id @GeneratedValue
+public class Comment {
+    @Id
+    @GeneratedValue
     private long id;
-    private String subject;
+    private String content;
     @ManyToOne
     private User user;
+    @ManyToOne
+    private Post post;
 
-    public Post(String subject, User user){
-        this.subject = subject;
+    public Comment(String content, User user, Post post){
+        this.content = content;
         this.user = user;
+        this.post = post;
     }
 
-    public Post(){
-
-    }
+    public Comment(){}
 
     public long getId() {
         return id;
@@ -31,12 +32,12 @@ public class Post {
         this.id = id;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getContent() {
+        return content;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public User getUser() {
@@ -47,8 +48,16 @@ public class Post {
         this.user = user;
     }
 
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
     @Override
     public String toString() {
-        return "Wat vindt je van " + subject + "?";
+        return content;
     }
 }
