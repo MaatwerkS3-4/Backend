@@ -1,20 +1,17 @@
 package com.ProftaakS34.Opinion.Data.Entities;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
-public class Post {
-
-    @Id @GeneratedValue
+public class Comment {
+    @Id
+    @GeneratedValue
     private long id;
-    private String subject;
+    private String content;
     private long userId;
 
-    public Post(String subject, long userId){
-        this.subject = subject;
-        this.userId = userId;
+    public Comment(String content){
+        this.content = content;
     }
 
     public long getId() {
@@ -25,12 +22,12 @@ public class Post {
         this.id = id;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getContent() {
+        return content;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public long getUserId() {
@@ -43,6 +40,6 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Wat vindt je van " + subject + "?";
+        return content;
     }
 }
