@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(PostController.BASE_URL)
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class PostController {
 
     public static final String BASE_URL = "api/post";
@@ -43,6 +44,7 @@ public class PostController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Post savePost(@RequestBody Post post){
+        System.out.print(post);
         return postService.savePost(post);
     }
 }
