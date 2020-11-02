@@ -20,7 +20,7 @@ public class CommentController {
     }
 
     @GetMapping
-    List<Comment> getAllComments(){
+    public List<Comment> getAllComments(){
         return commentService.findAllComments();
     }
 
