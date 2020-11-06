@@ -24,6 +24,7 @@ public class OpinionApplication {
 		return args -> {
 			userRepository.save(new User("Potatoman", "Yes"));
 			postRepository.save(new Post("Potatoes", userRepository.findById((long) 1.0).get()));
+			postRepository.save(new Post("Beans", userRepository.findById((long) 1.0).get()));
 			commentRepository.save(new Comment("I like potatoes", userRepository.findById((long) 1.0).get(), postRepository.findById((long) 2.0).get()));
 		};
 	}

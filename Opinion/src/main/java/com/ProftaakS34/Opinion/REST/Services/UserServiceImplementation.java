@@ -27,6 +27,8 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User saveUser(User user) {
+        if(user.getPassword() == null ||  user.getPassword().isBlank()) throw new IllegalArgumentException("Password is null or empty");
+        if(user.getUsername() == null || user.getUsername().isBlank()) throw new IllegalArgumentException("Username is null or empty");
         return userRepository.save(user);
     }
 }
