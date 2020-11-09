@@ -11,9 +11,13 @@ import java.util.List;
 public class CommentServiceImplementation implements CommentService{
 
     private final CommentRepository commentRepository;
+    private final UserServiceImplementation userRepo;
+    private final PostServiceImplementation postRepo;
 
-    public CommentServiceImplementation(CommentRepository commentRepository) {
+    public CommentServiceImplementation(CommentRepository commentRepository, UserServiceImplementation userRepo, PostServiceImplementation postRepo) {
         this.commentRepository = commentRepository;
+        this.userRepo = userRepo;
+        this.postRepo = postRepo;
     }
 
     @Override
@@ -39,6 +43,13 @@ public class CommentServiceImplementation implements CommentService{
 
     @Override
     public Comment saveComment(Comment comment) {
+        if (comment.getContent() == null || comment.getContent().isEmpty()) throw new IllegalArgumentException("content is empty or null");
+        if (comment.getPost() == null) throw new IllegalArgumentException("post is null");
+        if (comment.getUser() == null) throw new IllegalArgumentException("user is null");
+        if (userRepo.findUserById(comment.getUser().getId()) == null) throw new IllegalArgumentException("user not in database");
+        if (postRepo.findPostById(comment.getPost().getId()) == null) throw new IllegalArgumentException("post not in database");
+        comment.setUser(userRepo.findUserById(comment.getUser().getId()));
+        comment.setPost(postRepo.findPostById(comment.getPost().getId()));
         return commentRepository.save(comment);
     }
 }

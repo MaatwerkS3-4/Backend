@@ -21,7 +21,10 @@ public class MockPostRepo implements PostRepository {
     }
 
     @Override
-    public Optional<Post> findById(Long aLong) {
+    public Optional<Post> findById(Long id) {
+        for (Post post : posts) {
+            if(post.getId()==id) return Optional.of(post);
+        }
         return Optional.empty();
     }
 
