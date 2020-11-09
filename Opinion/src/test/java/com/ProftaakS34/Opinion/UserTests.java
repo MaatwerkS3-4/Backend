@@ -34,6 +34,7 @@ public class UserTests {
     @Test
     public void canSaveUser() {
         User correctUser = new User("username", "password");
-        Assertions.assertNotNull(userService.saveUser(correctUser));
+        userService.saveUser(correctUser);
+        Assertions.assertSame(userService.findAllUsers().get(0), correctUser);
     }
 }
