@@ -22,7 +22,7 @@ public class PostController {
     }
 
     @GetMapping
-    List<Post> getAllPosts(){
+    public List<Post> getAllPosts(){
         return postService.findAllPosts();
     }
 
