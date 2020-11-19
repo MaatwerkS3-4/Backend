@@ -39,6 +39,11 @@ public class CommentServiceImplementation implements CommentService{
 
     @Override
     public Comment saveComment(Comment comment) {
-        return commentRepository.save(comment);
+        if(comment.getPost() != null){
+            return commentRepository.save(comment);
+        }
+        else{
+            return null;
+        }
     }
 }
