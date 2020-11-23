@@ -20,12 +20,12 @@ public class CommentController {
     }
 
     @GetMapping
-    List<Comment> getAllComments(){
+    public List<Comment> getAllComments(){
         return commentService.findAllComments();
     }
 
     @GetMapping("/id/{id}")
-    public Comment getPostById(@PathVariable Long id){
+    public Comment getCommentById(@PathVariable Long id){
         return commentService.findCommentById(id);
     }
 
@@ -36,7 +36,8 @@ public class CommentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Comment savePost(@RequestBody Comment comment){
+    public Comment saveComment(@RequestBody Comment comment){
         return commentService.saveComment(comment);
     }
+
 }
