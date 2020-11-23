@@ -22,7 +22,12 @@ public class CommentServiceImplementation implements CommentService{
 
     @Override
     public Comment findCommentById(Long id) {
-        return commentRepository.findById(id).get();
+        if (commentRepository.findById(id).isPresent()) {
+            return commentRepository.findById(id).get();
+        }
+        else{
+            return null;
+        }
     }
 
     @Override
