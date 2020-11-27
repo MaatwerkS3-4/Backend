@@ -13,4 +13,6 @@ public interface CommentService {
     List<Comment> findAllComments();
 
     Comment saveComment(Comment comment);
+
+    int getAmountOfParticipantsByPostId(Long postId);
 }

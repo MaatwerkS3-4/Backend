@@ -1,6 +1,7 @@
 package com.ProftaakS34.Opinion.REST.Services;
 
 import com.ProftaakS34.Opinion.Data.Entities.Comment;
+import com.ProftaakS34.Opinion.Data.Entities.User;
 import com.ProftaakS34.Opinion.Data.Repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +57,14 @@ public class CommentServiceImplementation implements CommentService{
         comment.setUser(userRepo.findUserById(comment.getUser().getId()));
         comment.setPost(postRepo.findPostById(comment.getPost().getId()));
         return commentRepository.save(comment);
+    }
+
+    @Override
+    public int getAmountOfParticipantsByPostId(Long postId) {
+        List<User> uniqueUsers = new ArrayList<>();
+        for (Comment comment : findCommentsByPostId(postId)) {
+            if (!uniqueUsers.contains(comment.getUser())) uniqueUsers.add(comment.getUser());
+        }
+        return uniqueUsers.size();
     }
 }
