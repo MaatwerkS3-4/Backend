@@ -5,16 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDTO {
+public class CommentDTO {
     private long id;
-    private String subject;
+    private String content;
     private UserDTO poster;
-    private List<CommentDTO> comments = new ArrayList<>();
 }

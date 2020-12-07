@@ -4,6 +4,8 @@ import com.ProftaakS34.Opinion.data.dao.CommentDAO;
 import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.User;
+import com.ProftaakS34.Opinion.web.api.dto.CommentDTO;
+import com.ProftaakS34.Opinion.web.api.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +34,14 @@ public class CommentMapper {
         model.setId(dao.getId());
         model.setPoster(poster);
         return model;
+    }
+
+    public CommentDTO toDTO(Comment model){
+        UserDTO poster = userMapper.toDTO(model.getPoster());
+        CommentDTO dto = new CommentDTO();
+        dto.setContent(model.getContent());
+        dto.setId(model.getId());
+        dto.setPoster(poster);
+        return dto;
     }
 }
