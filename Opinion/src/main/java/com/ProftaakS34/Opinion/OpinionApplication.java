@@ -32,13 +32,17 @@ public class OpinionApplication {
 	CommandLineRunner runner(PostService postService, UserService userService, CommentService commentService){
 		return args -> {
 			User user = userService.saveUser("Potatoman", "Yes");
+			User user2 = userService.saveUser("Potatoman2", "Yes2");
+			User user3 = userService.saveUser("Potatoman3", "Yes3");
+
 			Post post = postService.savePost(user.getId(), "Potatoes");
-			Post post2 = postService.savePost(user.getId(), "Beans");
+			Post post2 = postService.savePost(user2.getId(), "Beans");
+			Post post3 = postService.savePost(user3.getId(), "Hmmm");
 			postService.postComment(post.getId(), user.getId(), "I like potatoes");
-			postService.postComment(post.getId(), user.getId(), "I like potatoes2");
-			postService.postComment(post2.getId(), user.getId(), "I like potatoes3");
+			postService.postComment(post.getId(), user2.getId(), "I like potatoes2");
+			postService.postComment(post2.getId(), user3.getId(), "I like potatoes3");
 			postService.postComment(post2.getId(), user.getId(), "I like potatoes4");
-			postService.postComment(post2.getId(), user.getId(), "I like potatoes5");
+			postService.postComment(post2.getId(), user2.getId(), "I like potatoes5");
 		};
 	}
 

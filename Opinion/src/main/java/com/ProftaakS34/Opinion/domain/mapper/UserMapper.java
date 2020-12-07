@@ -2,6 +2,7 @@ package com.ProftaakS34.Opinion.domain.mapper;
 
 import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.domain.model.User;
+import com.ProftaakS34.Opinion.web.api.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,5 +21,12 @@ public class UserMapper {
         model.setPassword(dao.getPassword());
         model.setUsername(dao.getUsername());
         return model;
+    }
+
+    public UserDTO toDTO(User user){
+        UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        return dto;
     }
 }
