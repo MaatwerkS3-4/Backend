@@ -9,5 +9,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateCommentDTO {
     private String content;
-    private Long userId;
+    private long posterId;
 }
