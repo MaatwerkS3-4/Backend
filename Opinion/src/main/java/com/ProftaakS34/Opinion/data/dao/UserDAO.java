@@ -1,11 +1,11 @@
-package com.ProftaakS34.Opinion.Data.Entities;
+package com.ProftaakS34.Opinion.data.dao;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class User {
+public class UserDAO {
 
     @Id
     @GeneratedValue
@@ -13,12 +13,12 @@ public class User {
     private String username;
     private String password;
 
-    public User(String username, String password){
+    public UserDAO(String username, String password){
         this.username = username;
         this.password = password;
     }
 
-    public User(){
+    public UserDAO(){
 
     }
 

@@ -1,29 +1,29 @@
 package com.ProftaakS34.Opinion;
 
-import com.ProftaakS34.Opinion.Data.Entities.Post;
-import com.ProftaakS34.Opinion.Data.Repositories.PostRepository;
+import com.ProftaakS34.Opinion.data.dao.PostDAO;
+import com.ProftaakS34.Opinion.data.repository.PostRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class MockPostRepo implements PostRepository {
-    public List<Post> posts;
+    public List<PostDAO> postDAOS;
     @Override
-    public <S extends Post> S save(S s) {
-        posts.add(s);
+    public <S extends PostDAO> S save(S s) {
+        postDAOS.add(s);
         return s;
     }
 
     @Override
-    public <S extends Post> Iterable<S> saveAll(Iterable<S> iterable) {
+    public <S extends PostDAO> Iterable<S> saveAll(Iterable<S> iterable) {
         return null;
     }
 
     @Override
-    public Optional<Post> findById(Long id) {
-        for (Post post : posts) {
-            if(post.getId()==id) return Optional.of(post);
+    public Optional<PostDAO> findById(Long id) {
+        for (PostDAO postDAO : postDAOS) {
+            if(postDAO.getId()==id) return Optional.of(postDAO);
         }
         return Optional.empty();
     }
@@ -34,12 +34,12 @@ public class MockPostRepo implements PostRepository {
     }
 
     @Override
-    public Iterable<Post> findAll() {
-        return posts;
+    public Iterable<PostDAO> findAll() {
+        return postDAOS;
     }
 
     @Override
-    public Iterable<Post> findAllById(Iterable<Long> iterable) {
+    public Iterable<PostDAO> findAllById(Iterable<Long> iterable) {
         return null;
     }
 
@@ -54,12 +54,12 @@ public class MockPostRepo implements PostRepository {
     }
 
     @Override
-    public void delete(Post post) {
+    public void delete(PostDAO postDAO) {
 
     }
 
     @Override
-    public void deleteAll(Iterable<? extends Post> iterable) {
+    public void deleteAll(Iterable<? extends PostDAO> iterable) {
 
     }
 
@@ -68,6 +68,6 @@ public class MockPostRepo implements PostRepository {
 
     }
     public MockPostRepo() {
-        posts = new ArrayList<>();
+        postDAOS = new ArrayList<>();
     }
 }

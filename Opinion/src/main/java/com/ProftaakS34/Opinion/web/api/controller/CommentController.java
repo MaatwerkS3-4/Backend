@@ -1,7 +1,7 @@
-package com.ProftaakS34.Opinion.REST.Controllers;
+package com.ProftaakS34.Opinion.web.api.controller;
 
-import com.ProftaakS34.Opinion.Data.Entities.Comment;
-import com.ProftaakS34.Opinion.REST.Services.CommentService;
+import com.ProftaakS34.Opinion.data.dao.CommentDAO;
+import com.ProftaakS34.Opinion.domain.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,24 +20,24 @@ public class CommentController {
     }
 
     @GetMapping
-    public List<Comment> getAllComments(){
+    public List<CommentDAO> getAllComments(){
         return commentService.findAllComments();
     }
 
     @GetMapping("/id/{id}")
-    public Comment getCommentById(@PathVariable Long id){
+    public CommentDAO getCommentById(@PathVariable Long id){
         return commentService.findCommentById(id);
     }
 
     @GetMapping("/postId/{postId}")
-    public List<Comment> getCommentsByPostId(@PathVariable Long postId){
+    public List<CommentDAO> getCommentsByPostId(@PathVariable Long postId){
         return commentService.findCommentsByPostId(postId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Comment saveComment(@RequestBody Comment comment){
-        return commentService.saveComment(comment);
+    public CommentDAO saveComment(@RequestBody CommentDAO commentDAO){
+        return commentService.saveComment(commentDAO);
     }
 
 }

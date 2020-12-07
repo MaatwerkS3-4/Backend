@@ -1,4 +1,4 @@
-package com.ProftaakS34.Opinion.Data.Entities;
+package com.ProftaakS34.Opinion.data.dao;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,23 +6,23 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Comment {
+public class CommentDAO {
     @Id
     @GeneratedValue
     private long id;
     private String content;
     @ManyToOne
-    private User user;
+    private UserDAO userDAO;
     @ManyToOne
-    private Post post;
+    private PostDAO postDAO;
 
-    public Comment(String content, User user, Post post){
+    public CommentDAO(String content, UserDAO userDAO, PostDAO postDAO){
         this.content = content;
-        this.user = user;
-        this.post = post;
+        this.userDAO = userDAO;
+        this.postDAO = postDAO;
     }
 
-    public Comment(){}
+    public CommentDAO(){}
 
     public long getId() {
         return id;
@@ -40,20 +40,20 @@ public class Comment {
         this.content = content;
     }
 
-    public User getUser() {
-        return user;
+    public UserDAO getUser() {
+        return userDAO;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-    public Post getPost() {
-        return post;
+    public PostDAO getPost() {
+        return postDAO;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPost(PostDAO postDAO) {
+        this.postDAO = postDAO;
     }
 
     @Override

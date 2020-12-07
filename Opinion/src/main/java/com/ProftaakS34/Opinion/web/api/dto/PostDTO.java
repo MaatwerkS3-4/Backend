@@ -1,13 +1,13 @@
-package com.ProftaakS34.Opinion.REST.Models;
+package com.ProftaakS34.Opinion.web.api.dto;
 
-public class PostInfo {
+public class PostDTO {
     private long id;
     private String subject;
     private String username;
     private int amountOfComments;
     private int amountOfParticipants;
 
-    public PostInfo(long id, String subject, String username, int amountOfComments, int amountOfParticipants) {
+    public PostDTO(long id, String subject, String username, int amountOfComments, int amountOfParticipants) {
         this.id = id;
         this.subject = subject;
         this.username = username;

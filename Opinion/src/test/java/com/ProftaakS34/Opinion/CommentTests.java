@@ -1,11 +1,11 @@
 package com.ProftaakS34.Opinion;
 
-import com.ProftaakS34.Opinion.Data.Entities.Comment;
-import com.ProftaakS34.Opinion.Data.Entities.Post;
-import com.ProftaakS34.Opinion.Data.Entities.User;
-import com.ProftaakS34.Opinion.REST.Services.CommentServiceImplementation;
-import com.ProftaakS34.Opinion.REST.Services.PostServiceImplementation;
-import com.ProftaakS34.Opinion.REST.Services.UserServiceImplementation;
+import com.ProftaakS34.Opinion.data.dao.CommentDAO;
+import com.ProftaakS34.Opinion.data.dao.PostDAO;
+import com.ProftaakS34.Opinion.data.dao.UserDAO;
+import com.ProftaakS34.Opinion.domain.service.CommentServiceImplementation;
+import com.ProftaakS34.Opinion.domain.service.PostServiceImplementation;
+import com.ProftaakS34.Opinion.domain.service.UserServiceImplementation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,76 +18,76 @@ public class CommentTests {
     public CommentServiceImplementation commentRepo;
     public UserServiceImplementation userRepo;
     public PostServiceImplementation postRepo;
-    User  correctUser;
-    Post correctPost;
+    UserDAO correctUserDAO;
+    PostDAO correctPostDAO;
     @BeforeEach
     public void setUp() {
         userRepo = new UserServiceImplementation(new MockUserRepo());
         postRepo = new PostServiceImplementation(new MockPostRepo(), userRepo);
         commentRepo = new CommentServiceImplementation(new MockCommentRepo(), userRepo, postRepo);
-        correctUser = new User("username", "password");
-        correctUser.setId(1);
-        userRepo.saveUser(correctUser);
-        correctPost = new Post("politics", correctUser);
-        correctPost.setId(1);
-        postRepo.savePost(correctPost);
+        correctUserDAO = new UserDAO("username", "password");
+        correctUserDAO.setId(1);
+        userRepo.saveUser(correctUserDAO);
+        correctPostDAO = new PostDAO("politics", correctUserDAO);
+        correctPostDAO.setId(1);
+        postRepo.savePost(correctPostDAO);
     }
     @Test
     public void checksIfCommentHasContent() {
-        Comment commentMissingContent = new Comment();
-        commentMissingContent.setUser(correctUser);
-        commentMissingContent.setPost(correctPost);
+        CommentDAO commentDAOMissingContent = new CommentDAO();
+        commentDAOMissingContent.setUser(correctUserDAO);
+        commentDAOMissingContent.setPost(correctPostDAO);
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            commentRepo.saveComment(commentMissingContent);
+            commentRepo.saveComment(commentDAOMissingContent);
         });
     }
     @Test
     public void checksIfCommentHasPost() {
-        Comment commentMissingPost = new Comment();
-        commentMissingPost.setUser(correctUser);
-        commentMissingPost.setContent("I agree");
+        CommentDAO commentDAOMissingPost = new CommentDAO();
+        commentDAOMissingPost.setUser(correctUserDAO);
+        commentDAOMissingPost.setContent("I agree");
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            commentRepo.saveComment(commentMissingPost);
+            commentRepo.saveComment(commentDAOMissingPost);
         });
     }
     @Test
     public void checksIfCommentHasUser(){
-        Comment commentMissingUser = new Comment();
-        commentMissingUser.setPost(correctPost);
-        commentMissingUser.setContent("I agree");
+        CommentDAO commentDAOMissingUser = new CommentDAO();
+        commentDAOMissingUser.setPost(correctPostDAO);
+        commentDAOMissingUser.setContent("I agree");
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-           commentRepo.saveComment(commentMissingUser);
+           commentRepo.saveComment(commentDAOMissingUser);
         });
     }
     @Test
     public void checksIfPostExists() {
-        Comment commentPostNotInDatabase = new Comment();
-        commentPostNotInDatabase.setContent("I agree");
-        commentPostNotInDatabase.setUser(correctUser);
-        Post fakePost = new Post();
-        commentPostNotInDatabase.setPost(fakePost);
+        CommentDAO commentDAOPostNotInDatabase = new CommentDAO();
+        commentDAOPostNotInDatabase.setContent("I agree");
+        commentDAOPostNotInDatabase.setUser(correctUserDAO);
+        PostDAO fakePostDAO = new PostDAO();
+        commentDAOPostNotInDatabase.setPost(fakePostDAO);
         Assertions.assertThrows(NoSuchElementException.class, () -> {
-            commentRepo.saveComment(commentPostNotInDatabase);
+            commentRepo.saveComment(commentDAOPostNotInDatabase);
         });
     }
     @Test
     public void checksIfUserExists() {
-        Comment commentUserNotInDatabase = new Comment();
-        commentUserNotInDatabase.setPost(correctPost);
-        commentUserNotInDatabase.setContent("I agree");
-        User fakeUser = new User();
-        commentUserNotInDatabase.setUser(fakeUser);
+        CommentDAO commentDAOUserNotInDatabase = new CommentDAO();
+        commentDAOUserNotInDatabase.setPost(correctPostDAO);
+        commentDAOUserNotInDatabase.setContent("I agree");
+        UserDAO fakeUserDAO = new UserDAO();
+        commentDAOUserNotInDatabase.setUser(fakeUserDAO);
         Assertions.assertThrows(NoSuchElementException.class, () -> {
-            commentRepo.saveComment(commentUserNotInDatabase);
+            commentRepo.saveComment(commentDAOUserNotInDatabase);
         });
     }
     @Test
     public void canPlaceComment() {
-        Comment correctComment = new Comment();
-        correctComment.setPost(correctPost);
-        correctComment.setUser(correctUser);
-        correctComment.setContent("I agree");
-        commentRepo.saveComment(correctComment);
-        Assertions.assertSame(commentRepo.findAllComments().get(0), correctComment);
+        CommentDAO correctCommentDAO = new CommentDAO();
+        correctCommentDAO.setPost(correctPostDAO);
+        correctCommentDAO.setUser(correctUserDAO);
+        correctCommentDAO.setContent("I agree");
+        commentRepo.saveComment(correctCommentDAO);
+        Assertions.assertSame(commentRepo.findAllComments().get(0), correctCommentDAO);
     }
 }

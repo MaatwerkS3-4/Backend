@@ -1,4 +1,4 @@
-package com.ProftaakS34.Opinion.Documentation;
+package com.ProftaakS34.Opinion.documentation;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

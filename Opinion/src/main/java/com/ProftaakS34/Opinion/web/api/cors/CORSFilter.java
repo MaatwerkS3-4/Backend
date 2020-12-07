@@ -1,4 +1,4 @@
-package com.ProftaakS34.Opinion.REST.CORS;
+package com.ProftaakS34.Opinion.web.api.cors;
 
 import org.springframework.web.filter.GenericFilterBean;
 

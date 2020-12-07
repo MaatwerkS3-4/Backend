@@ -1,11 +1,11 @@
-package com.ProftaakS34.Opinion.REST.Models;
+package com.ProftaakS34.Opinion.web.api.dto;
 
-public class UserInfo {
+public class UserDTO {
     private long id;
     private String username;
     private String password;
 
-    public UserInfo(long id, String username, String password) {
+    public UserDTO(long id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;

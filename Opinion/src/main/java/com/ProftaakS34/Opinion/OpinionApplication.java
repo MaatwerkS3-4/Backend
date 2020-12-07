@@ -1,13 +1,12 @@
 package com.ProftaakS34.Opinion;
 
-import com.ProftaakS34.Opinion.Data.Entities.Comment;
-import com.ProftaakS34.Opinion.Data.Entities.Post;
-import com.ProftaakS34.Opinion.Data.Entities.User;
-import com.ProftaakS34.Opinion.Data.Repositories.CommentRepository;
-import com.ProftaakS34.Opinion.Data.Repositories.PostRepository;
-import com.ProftaakS34.Opinion.Data.Repositories.UserRepository;
-import com.ProftaakS34.Opinion.REST.CORS.CORSFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ProftaakS34.Opinion.data.dao.CommentDAO;
+import com.ProftaakS34.Opinion.data.dao.PostDAO;
+import com.ProftaakS34.Opinion.data.dao.UserDAO;
+import com.ProftaakS34.Opinion.data.repository.CommentRepository;
+import com.ProftaakS34.Opinion.data.repository.PostRepository;
+import com.ProftaakS34.Opinion.data.repository.UserRepository;
+import com.ProftaakS34.Opinion.web.api.cors.CORSFilter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,10 +23,10 @@ public class OpinionApplication {
 	@Bean
 	CommandLineRunner runner(PostRepository postRepository, UserRepository userRepository, CommentRepository commentRepository){
 		return args -> {
-			userRepository.save(new User("Potatoman", "Yes"));
-			postRepository.save(new Post("Potatoes", userRepository.findById((long) 1.0).get()));
-			postRepository.save(new Post("Beans", userRepository.findById((long) 1.0).get()));
-			commentRepository.save(new Comment("I like potatoes", userRepository.findById((long) 1.0).get(), postRepository.findById((long) 2.0).get()));
+			userRepository.save(new UserDAO("Potatoman", "Yes"));
+			postRepository.save(new PostDAO("Potatoes", userRepository.findById((long) 1.0).get()));
+			postRepository.save(new PostDAO("Beans", userRepository.findById((long) 1.0).get()));
+			commentRepository.save(new CommentDAO("I like potatoes", userRepository.findById((long) 1.0).get(), postRepository.findById((long) 2.0).get()));
 		};
 	}
 

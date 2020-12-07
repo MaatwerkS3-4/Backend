@@ -1,29 +1,29 @@
 package com.ProftaakS34.Opinion;
 
-import com.ProftaakS34.Opinion.Data.Entities.User;
-import com.ProftaakS34.Opinion.Data.Repositories.UserRepository;
+import com.ProftaakS34.Opinion.data.dao.UserDAO;
+import com.ProftaakS34.Opinion.data.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class MockUserRepo implements UserRepository {
-    public List<User> users;
+    public List<UserDAO> userDAOS;
     @Override
-    public <S extends User> S save(S s) {
-        users.add(s);
+    public <S extends UserDAO> S save(S s) {
+        userDAOS.add(s);
         return s;
     }
 
     @Override
-    public <S extends User> Iterable<S> saveAll(Iterable<S> iterable) {
+    public <S extends UserDAO> Iterable<S> saveAll(Iterable<S> iterable) {
         return null;
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        for (User user : users) {
-            if(user.getId() == id) return Optional.of(user);
+    public Optional<UserDAO> findById(Long id) {
+        for (UserDAO userDAO : userDAOS) {
+            if(userDAO.getId() == id) return Optional.of(userDAO);
         }
         return Optional.empty();
     }
@@ -34,12 +34,12 @@ public class MockUserRepo implements UserRepository {
     }
 
     @Override
-    public Iterable<User> findAll() {
-        return users;
+    public Iterable<UserDAO> findAll() {
+        return userDAOS;
     }
 
     @Override
-    public Iterable<User> findAllById(Iterable<Long> iterable) {
+    public Iterable<UserDAO> findAllById(Iterable<Long> iterable) {
         return null;
     }
 
@@ -54,12 +54,12 @@ public class MockUserRepo implements UserRepository {
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(UserDAO userDAO) {
 
     }
 
     @Override
-    public void deleteAll(Iterable<? extends User> iterable) {
+    public void deleteAll(Iterable<? extends UserDAO> iterable) {
 
     }
 
@@ -68,6 +68,6 @@ public class MockUserRepo implements UserRepository {
 
     }
     public MockUserRepo(){
-        users = new ArrayList<>();
+        userDAOS = new ArrayList<>();
     }
 }
