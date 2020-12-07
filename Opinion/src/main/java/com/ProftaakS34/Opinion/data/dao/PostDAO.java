@@ -1,54 +1,36 @@
 package com.ProftaakS34.Opinion.data.dao;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "post")
 public class PostDAO {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+
+    @Column(name = "subject")
     private String subject;
+
     @ManyToOne
-    private UserDAO userDAO;
+    private UserDAO poster;
 
-    public PostDAO(String subject, UserDAO userDAO){
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<CommentDAO> comments = new ArrayList<>();
+
+    public PostDAO(String subject, UserDAO poster) {
         this.subject = subject;
-        this.userDAO = userDAO;
-    }
-
-    public PostDAO(){
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public UserDAO getUser() {
-        return userDAO;
-    }
-
-    public void setUser(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
-    @Override
-    public String toString() {
-        return "Wat vindt je van " + subject + "?";
+        this.poster = poster;
     }
 }

@@ -6,12 +6,20 @@ import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.data.repository.CommentRepository;
 import com.ProftaakS34.Opinion.data.repository.PostRepository;
 import com.ProftaakS34.Opinion.data.repository.UserRepository;
+import com.ProftaakS34.Opinion.domain.model.Comment;
+import com.ProftaakS34.Opinion.domain.model.Post;
+import com.ProftaakS34.Opinion.domain.model.User;
+import com.ProftaakS34.Opinion.domain.service.CommentService;
+import com.ProftaakS34.Opinion.domain.service.PostService;
+import com.ProftaakS34.Opinion.domain.service.UserService;
 import com.ProftaakS34.Opinion.web.api.cors.CORSFilter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+
+import java.io.Console;
 
 @SpringBootApplication
 public class OpinionApplication {
@@ -21,12 +29,16 @@ public class OpinionApplication {
 	}
 
 	@Bean
-	CommandLineRunner runner(PostRepository postRepository, UserRepository userRepository, CommentRepository commentRepository){
+	CommandLineRunner runner(PostService postService, UserService userService, CommentService commentService){
 		return args -> {
-			userRepository.save(new UserDAO("Potatoman", "Yes"));
-			postRepository.save(new PostDAO("Potatoes", userRepository.findById((long) 1.0).get()));
-			postRepository.save(new PostDAO("Beans", userRepository.findById((long) 1.0).get()));
-			commentRepository.save(new CommentDAO("I like potatoes", userRepository.findById((long) 1.0).get(), postRepository.findById((long) 2.0).get()));
+			User user = userService.saveUser("Potatoman", "Yes");
+			Post post = postService.savePost(user.getId(), "Potatoes");
+			Post post2 = postService.savePost(user.getId(), "Beans");
+			postService.postComment(post.getId(), user.getId(), "I like potatoes");
+			postService.postComment(post.getId(), user.getId(), "I like potatoes2");
+			postService.postComment(post2.getId(), user.getId(), "I like potatoes3");
+			postService.postComment(post2.getId(), user.getId(), "I like potatoes4");
+			postService.postComment(post2.getId(), user.getId(), "I like potatoes5");
 		};
 	}
 
