@@ -8,9 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PostInfoDTO {
-    private long postId;
-    private String postSubject;
+public class DiscussionInfoDTO {
+    private long id;
+    private String subject;
     private UserDTO poster;
     private int numberOfParticipants;
     private int numberOfComments;

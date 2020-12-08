@@ -1,12 +1,11 @@
 package com.ProftaakS34.Opinion.domain.service;
 
 import com.ProftaakS34.Opinion.data.dao.CommentDAO;
-import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.data.repository.CommentRepository;
 import com.ProftaakS34.Opinion.domain.mapper.CommentMapper;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
 import com.ProftaakS34.Opinion.domain.model.Comment;
-import com.ProftaakS34.Opinion.domain.model.Post;
+import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,10 +51,10 @@ public class CommentService {
         return commentMapper.toModel(comment);
     }
 
-    public int getAmountOfParticipantsByPostId(Post post) {
+    public int getNumberOfParticipantsByDiscussion(Discussion discussion) {
 
         List<User> uniqueUserDAOS = new ArrayList<>();
-        for (Comment comment: post.getComments()) {
+        for (Comment comment: discussion.getComments()) {
             if (!uniqueUserDAOS.contains(comment.getPoster())) uniqueUserDAOS.add(comment.getPoster());
         }
 

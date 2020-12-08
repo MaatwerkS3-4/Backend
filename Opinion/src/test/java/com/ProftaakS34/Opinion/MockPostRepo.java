@@ -1,12 +1,5 @@
 package com.ProftaakS34.Opinion;
 
-import com.ProftaakS34.Opinion.data.dao.PostDAO;
-import com.ProftaakS34.Opinion.data.repository.PostRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 //public class MockPostRepo implements PostRepository {
 //    public List<PostDAO> postDAOS;
 //    @Override

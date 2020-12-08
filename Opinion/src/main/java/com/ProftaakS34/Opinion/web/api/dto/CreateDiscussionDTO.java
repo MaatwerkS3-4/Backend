@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreatePostDTO {
+public class CreateDiscussionDTO {
     private long userId;
     private String subject;
 }

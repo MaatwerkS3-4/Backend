@@ -12,8 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "post")
-public class PostDAO {
+@Table(name = "discussion")
+public class DiscussionDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class PostDAO {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CommentDAO> comments = new ArrayList<>();
 
-    public PostDAO(String subject, UserDAO poster) {
+    public DiscussionDAO(String subject, UserDAO poster) {
         this.subject = subject;
         this.poster = poster;
     }

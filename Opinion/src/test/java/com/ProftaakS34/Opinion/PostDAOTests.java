@@ -1,15 +1,6 @@
 package com.ProftaakS34.Opinion;
 
-import com.ProftaakS34.Opinion.data.dao.PostDAO;
-import com.ProftaakS34.Opinion.data.dao.UserDAO;
-import com.ProftaakS34.Opinion.domain.service.PostService;
-import com.ProftaakS34.Opinion.domain.service.UserService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.NoSuchElementException;
 
 @SpringBootTest
 public class PostDAOTests {

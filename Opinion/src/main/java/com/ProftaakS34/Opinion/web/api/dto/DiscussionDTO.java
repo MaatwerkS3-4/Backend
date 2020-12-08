@@ -1,19 +1,20 @@
-package com.ProftaakS34.Opinion.domain.model;
+package com.ProftaakS34.Opinion.web.api.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class Post {
+@AllArgsConstructor
+public class DiscussionDTO {
     private long id;
     private String subject;
-    private User poster;
-    private List<Comment> comments = new ArrayList<>();
+    private UserDTO poster;
+    private List<CommentDTO> comments = new ArrayList<>();
 }

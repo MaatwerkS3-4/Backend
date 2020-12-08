@@ -1,6 +1,5 @@
 package com.ProftaakS34.Opinion.web.api.controller;
 
-import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
 import com.ProftaakS34.Opinion.domain.model.User;
 import com.ProftaakS34.Opinion.domain.service.UserService;
@@ -9,13 +8,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +72,7 @@ public class UserController {
      * Create a new user
      *
      * @param dto The {@link CreateUserDTO} which contains the information to create the user
-     * @return The {@link ResponseEntity} with status {@code 201 (CREATED)} with as body the created user {@link PostDTO}
+     * @return The {@link ResponseEntity} with status {@code 201 (CREATED)} with as body the created user {@link DiscussionDTO}
      */
     @ApiOperation(
             value = "Create a new user"
