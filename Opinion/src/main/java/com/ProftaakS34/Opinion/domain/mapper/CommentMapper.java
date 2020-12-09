@@ -24,6 +24,7 @@ public class CommentMapper {
         dao.setContent(model.getContent());
         dao.setId(model.getId());
         dao.setPoster(poster);
+        dao.setTimeStamp(model.getTimeStamp());
         return dao;
     }
 
@@ -33,6 +34,7 @@ public class CommentMapper {
         model.setContent(dao.getContent());
         model.setId(dao.getId());
         model.setPoster(poster);
+        model.setTimeStamp(dao.getTimeStamp());
         return model;
     }
 
@@ -42,6 +44,7 @@ public class CommentMapper {
         dto.setContent(model.getContent());
         dto.setId(model.getId());
         dto.setPoster(poster);
+        dto.setTimeStamp(model.getTimeStamp());
         return dto;
     }
 }

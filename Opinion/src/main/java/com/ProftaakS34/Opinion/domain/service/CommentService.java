@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,7 +48,8 @@ public class CommentService {
         User poster = userService.findUserById(posterId);
         if(poster == null) throw new IllegalArgumentException("User not found");
 
-        CommentDAO comment = commentRepository.save(new CommentDAO(content, userMapper.toDAO(poster)));
+        Comment model = new Comment(content, poster);
+        CommentDAO comment = commentRepository.save(commentMapper.toDAO(model));
         return commentMapper.toModel(comment);
     }
 
