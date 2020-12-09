@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,4 +16,5 @@ public class DiscussionInfoDTO {
     private UserDTO poster;
     private int numberOfParticipants;
     private int numberOfComments;
+    private Date timeStamp;
 }

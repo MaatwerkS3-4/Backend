@@ -40,6 +40,7 @@ public class DiscussionMapper {
         dao.setPoster(poster);
         dao.setSubject(model.getSubject());
         dao.setDescription(model.getDescription());
+        dao.setTimeStamp(model.getTimeStamp());
 
         return dao;
     }
@@ -57,6 +58,7 @@ public class DiscussionMapper {
         model.setSubject(dao.getSubject());
         model.setPoster(poster);
         model.setDescription(dao.getDescription());
+        model.setTimeStamp(dao.getTimeStamp());
 
         return model;
     }

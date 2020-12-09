@@ -76,7 +76,8 @@ public class DiscussionService {
         User poster = userService.findUserById(userId);
         if(poster == null) throw new IllegalArgumentException("user is null or incorrect");
 
-        DiscussionDAO dao = discussionRepository.save(new DiscussionDAO(subject, description, userMapper.toDAO(poster)));
+        Discussion model = new Discussion(subject, description, poster);
+        DiscussionDAO dao = discussionRepository.save(discussionMapper.toDAO(model));
         return discussionMapper.toModel(dao);
     }
 

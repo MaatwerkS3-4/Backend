@@ -107,6 +107,7 @@ public class DiscussionInfoController {
                 model.getSubject(),
                 userMapper.toDTO(model.getPoster()),
                 parCount,
-                comCount);
+                comCount,
+                model.getTimeStamp());
     }
 }
