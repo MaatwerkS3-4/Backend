@@ -50,4 +50,14 @@ public class CommentService {
         CommentDAO comment = commentRepository.save(new CommentDAO(content, userMapper.toDAO(poster)));
         return commentMapper.toModel(comment);
     }
+
+    public int getNumberOfParticipantsByDiscussion(Discussion discussion) {
+
+        List<User> uniqueUserDAOS = new ArrayList<>();
+        for (Comment comment: discussion.getComments()) {
+            if (!uniqueUserDAOS.contains(comment.getPoster())) uniqueUserDAOS.add(comment.getPoster());
+        }
+
+        return uniqueUserDAOS.size();
+    }
 }

@@ -8,7 +8,6 @@ import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
-import com.ProftaakS34.Opinion.web.api.controller.DiscussionController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,16 +70,6 @@ public class DiscussionService {
         return discussions;
     }
 
-    public List<Discussion> findAllDiscussionsByCriteria(String criteria){
-        List<Discussion> filteredDiscussions = new ArrayList<>();
-        for(Discussion d : findAllDiscussions()){
-            if(d.getSubject().toLowerCase().contains(criteria.toLowerCase())){
-                filteredDiscussions.add(d);
-            }
-        }
-        return filteredDiscussions;
-    }
-
     public Discussion postDiscussion(long userId, String subject) {
         if(subject == null || subject.isEmpty()) throw new IllegalArgumentException("subject is null or empty");
         User poster = userService.findUserById(userId);
@@ -105,10 +94,5 @@ public class DiscussionService {
         discussionRepository.save(discussion);
 
         return comment;
-    }
-
-    public List<Comment> getCommentsByDiscussionId(long discussionId){
-        Discussion discussion = findDiscussionById(discussionId);
-        return discussion.getComments();
     }
 }

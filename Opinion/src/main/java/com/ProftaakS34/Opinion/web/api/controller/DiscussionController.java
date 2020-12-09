@@ -16,11 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
-@RequestMapping("/discussions")
+@RequestMapping("/discussion")
 @Api(tags = "Discussions")
 public class DiscussionController {
 
@@ -51,51 +48,9 @@ public class DiscussionController {
             @ApiResponse(code = 200, message = "Ok - The discussion with the given id has been returned.")
             //todo: implement exceptions
     })
-    @GetMapping("/id/{discussionId}")
+    @GetMapping("/{discussionId}")
     private ResponseEntity<DiscussionDTO> getDiscussionById(@PathVariable long discussionId){
         DiscussionDTO resource = discussionMapper.toDTO(discussionService.findDiscussionById(discussionId));
-        return ResponseEntity.ok(resource);
-    }
-
-    /**
-     * Retrieves all existing discussions and returns it as a {@link List<DiscussionDTO>}
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} with as body the list of found discussions {@link List<DiscussionDTO>}
-     */
-    @ApiOperation(
-            value = "Get all existing discussions"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Ok - the list of existing discussions has been returned")
-    })
-    @GetMapping
-    private ResponseEntity<List<DiscussionDTO>> getDiscussions(){
-        List<DiscussionDTO> resource = new ArrayList<>();
-        for(Discussion d : discussionService.findAllDiscussions()){
-            resource.add(discussionMapper.toDTO(d));
-        }
-
-        return ResponseEntity.ok(resource);
-    }
-
-    /**
-     * Retrieves a list of discussions filtered by a given criteria  and returns it as a {@link List<DiscussionDTO>}
-     * @param criteria The criteria for which to filter
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} with as body the list of filtered discussions {@link List<DiscussionDTO>}
-     */
-    @ApiOperation(
-            value = "Get a list of filtered discussions"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Ok - the list of filtered discussions has been returned")
-    })
-
-    @GetMapping("/criteria/{criteria}")
-    private ResponseEntity<List<DiscussionDTO>> getDiscussionsByCriteria(@PathVariable String criteria){
-        List<DiscussionDTO> resource = new ArrayList<>();
-        for(Discussion d : discussionService.findAllDiscussionsByCriteria(criteria)){
-            resource.add(discussionMapper.toDTO(d));
-        }
-
         return ResponseEntity.ok(resource);
     }
 

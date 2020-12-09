@@ -61,19 +61,16 @@ public class DiscussionMapper {
 
     public DiscussionDTO toDTO(Discussion model){
         UserDTO poster = userMapper.toDTO(model.getPoster());
+        List<CommentDTO> comments = new ArrayList<>();
+        for(Comment c : model.getComments()){
+            comments.add(commentMapper.toDTO(c));
+        }
 
         DiscussionDTO dto = new DiscussionDTO();
+        dto.setComments(comments);
         dto.setId(model.getId());
         dto.setPoster(poster);
         dto.setSubject(model.getSubject());
-        dto.setNumberOfComments(model.getComments().size());
-
-        List<User> uniqueUserDAOS = new ArrayList<>();
-        for (Comment comment: model.getComments()) {
-            if (!uniqueUserDAOS.contains(comment.getPoster())) uniqueUserDAOS.add(comment.getPoster());
-        }
-        dto.setNumberOfParticipants(uniqueUserDAOS.size());
-
         return dto;
     }
 }
