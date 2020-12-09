@@ -39,6 +39,7 @@ public class DiscussionMapper {
         dao.setId(model.getId());
         dao.setPoster(poster);
         dao.setSubject(model.getSubject());
+        dao.setDescription(model.getDescription());
 
         return dao;
     }
@@ -55,6 +56,7 @@ public class DiscussionMapper {
         model.setId(dao.getId());
         model.setSubject(dao.getSubject());
         model.setPoster(poster);
+        model.setDescription(dao.getDescription());
 
         return model;
     }
@@ -68,6 +70,7 @@ public class DiscussionMapper {
 
         DiscussionDTO dto = new DiscussionDTO();
         dto.setComments(comments);
+        dto.setDescription(model.getDescription());
         dto.setId(model.getId());
         dto.setPoster(poster);
         dto.setSubject(model.getSubject());

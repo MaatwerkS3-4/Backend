@@ -15,6 +15,7 @@ import java.util.List;
 public class DiscussionDTO {
     private long id;
     private String subject;
+    private String description;
     private UserDTO poster;
     private List<CommentDTO> comments = new ArrayList<>();
 }

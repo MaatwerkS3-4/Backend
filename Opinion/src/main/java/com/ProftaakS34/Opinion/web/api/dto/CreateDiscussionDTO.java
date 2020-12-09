@@ -11,4 +11,5 @@ import lombok.Setter;
 public class CreateDiscussionDTO {
     private long userId;
     private String subject;
+    private String description;
 }

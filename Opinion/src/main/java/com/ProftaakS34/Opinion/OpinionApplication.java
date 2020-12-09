@@ -26,9 +26,9 @@ public class OpinionApplication {
 			User user2 = userService.saveUser("Potatoman2", "Yes2");
 			User user3 = userService.saveUser("Potatoman3", "Yes3");
 
-			Discussion discussion = discussionService.postDiscussion(user.getId(), "Potatoes");
-			Discussion discussion2 = discussionService.postDiscussion(user2.getId(), "Beans");
-			Discussion discussion3 = discussionService.postDiscussion(user3.getId(), "Hmmm");
+			Discussion discussion = discussionService.postDiscussion(user.getId(), "Potatoes", "Test description");
+			Discussion discussion2 = discussionService.postDiscussion(user2.getId(), "Beans", "Test description 2");
+			Discussion discussion3 = discussionService.postDiscussion(user3.getId(), "Hmmm", "Test description 3");
 			discussionService.postComment(discussion.getId(), user.getId(), "I like potatoes");
 			discussionService.postComment(discussion.getId(), user2.getId(), "I like potatoes2");
 			discussionService.postComment(discussion2.getId(), user3.getId(), "I like potatoes3");

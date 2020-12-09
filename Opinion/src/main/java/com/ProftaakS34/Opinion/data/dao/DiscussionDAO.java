@@ -23,14 +23,18 @@ public class DiscussionDAO {
     @Column(name = "subject")
     private String subject;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
     private UserDAO poster;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CommentDAO> comments = new ArrayList<>();
 
-    public DiscussionDAO(String subject, UserDAO poster) {
+    public DiscussionDAO(String subject, String description, UserDAO poster) {
         this.subject = subject;
+        this.description = description;
         this.poster = poster;
     }
 }

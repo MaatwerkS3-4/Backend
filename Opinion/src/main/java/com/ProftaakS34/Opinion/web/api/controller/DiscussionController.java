@@ -68,7 +68,7 @@ public class DiscussionController {
     })
     @PostMapping
     private ResponseEntity<DiscussionDTO> saveDiscussion(@RequestBody CreateDiscussionDTO dto){
-        Discussion discussion = discussionService.postDiscussion(dto.getUserId(), dto.getSubject());
+        Discussion discussion = discussionService.postDiscussion(dto.getUserId(), dto.getSubject(), dto.getDescription());
         DiscussionDTO resource = discussionMapper.toDTO(discussion);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);

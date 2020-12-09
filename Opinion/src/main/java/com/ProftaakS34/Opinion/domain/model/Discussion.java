@@ -14,6 +14,7 @@ import java.util.Set;
 public class Discussion {
     private long id;
     private String subject;
+    private String description;
     private User poster;
     private List<Comment> comments = new ArrayList<>();
 }
