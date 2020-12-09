@@ -24,8 +24,7 @@ public class CommentDAO {
     private String content;
 
     @Column(name = "time_stamp")
-    @JsonFormat(pattern = "yyyy-MM-ddThh:mm")
-    @DateTimeFormat(pattern = "yyyy-MM-ddThh:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss", timezone = "UTC")
     private Date timeStamp;
 
     @ManyToOne
