@@ -1,0 +1,10 @@
+package com.ProftaakS34.Opinion.data.repository;
+
+import com.ProftaakS34.Opinion.data.dao.DiscussionDAO;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface DiscussionRepository extends CrudRepository<DiscussionDAO, Long> {
+
+}
