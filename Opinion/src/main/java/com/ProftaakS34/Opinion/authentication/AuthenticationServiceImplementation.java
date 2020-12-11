@@ -3,8 +3,9 @@ package com.ProftaakS34.Opinion.authentication;
 import com.ProftaakS34.Opinion.helpers.AuthenticationConstants;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class AuthenticationServiceImplementation implements AuthenticationService {
     private AuthorizationService authorizationService;
     AuthenticationServiceImplementation(AuthorizationService authorizationService) {
