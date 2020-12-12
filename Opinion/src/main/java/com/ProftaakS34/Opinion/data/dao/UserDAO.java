@@ -22,10 +22,18 @@ public class UserDAO {
     private String username;
 
     @Column(name = "password")
-    private String password;
+    private String encryptedPassword;
 
-    public UserDAO(String username, String password) {
+    @Column(name = "salt")
+    private String salt;
+
+    public UserDAO(String username, String encryptedPassword) {
         this.username = username;
-        this.password = password;
+        this.encryptedPassword = encryptedPassword;
+    }
+    public UserDAO(String username, String encryptedPassword, String salt) {
+        this.username = username;
+        this.encryptedPassword = encryptedPassword;
+        this.salt = salt;
     }
 }

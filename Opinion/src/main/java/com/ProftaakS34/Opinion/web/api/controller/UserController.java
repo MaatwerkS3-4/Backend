@@ -1,5 +1,6 @@
 package com.ProftaakS34.Opinion.web.api.controller;
 
+import com.ProftaakS34.Opinion.authentication.AuthenticationService;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
 import com.ProftaakS34.Opinion.domain.model.User;
 import com.ProftaakS34.Opinion.domain.service.UserService;
@@ -22,11 +23,13 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
+    private final AuthenticationService authservice;
 
     @Autowired
-    public UserController(UserService userService, UserMapper userMapper) {
+    public UserController(UserService userService, UserMapper userMapper, AuthenticationService authService) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.authservice = authService;
     }
 
     /**
@@ -82,9 +85,35 @@ public class UserController {
     })
     @PostMapping
     public ResponseEntity<UserDTO> saveUser(@RequestBody CreateUserDTO dto){
-        User user = userService.saveUser(dto.getUsername(), dto.getPassword());
-        UserDTO resource = userMapper.toDTO(user);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(resource);
+        try {
+            User user = userService.saveUser(dto.getUsername(), dto.getPassword());
+            UserDTO resource = userMapper.toDTO(user);
+            String jwt = authservice.authorizeUserLogin(dto.getUsername());
+            resource.setJwt(jwt);
+            return ResponseEntity.status(HttpStatus.CREATED).body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+    /**
+     *
+     */
+    @ApiOperation(
+            value= "Log In"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "User has logged in correctly")
+    })
+        @PostMapping("/login")
+    public ResponseEntity<UserDTO> logIn(@RequestBody CreateUserDTO dto) {
+        try {
+            User user = userService.logIn(dto.getUsername(), dto.getPassword());
+            UserDTO resource = userMapper.toDTO(user);
+            String jwt = authservice.authorizeUserLogin(dto.getUsername());
+            resource.setJwt(jwt);
+            return ResponseEntity.status(HttpStatus.OK).body(resource);
+        } catch(Exception e ) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 }
