@@ -80,21 +80,4 @@ public class DiscussionService {
         DiscussionDAO dao = discussionRepository.save(discussionMapper.toDAO(model));
         return discussionMapper.toModel(dao);
     }
-
-    public Comment postComment(long discussionId, long posterId, String content) {
-
-        //Find discussion
-        Optional<DiscussionDAO> promise = discussionRepository.findById(discussionId);
-        if(promise.isEmpty()) throw new IllegalArgumentException("Discussion not found");
-        DiscussionDAO discussion = promise.get();
-
-        //Create message
-        Comment comment = commentService.saveComment(posterId, content);
-
-        //Add comment to discussion
-        discussion.getComments().add(commentMapper.toDAO(comment));
-        discussionRepository.save(discussion);
-
-        return comment;
-    }
 }

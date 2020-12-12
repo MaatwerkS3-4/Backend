@@ -7,7 +7,9 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,4 +31,7 @@ public class CommentDAO {
 
     @ManyToOne
     private UserDAO poster;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<CommentDAO> replies = new ArrayList<>();
 }

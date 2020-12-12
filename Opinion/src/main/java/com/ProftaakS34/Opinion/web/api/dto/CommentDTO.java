@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,4 +18,5 @@ public class CommentDTO {
     private String content;
     private UserDTO poster;
     private Date timeStamp;
+    private List<CommentDTO> replies;
 }

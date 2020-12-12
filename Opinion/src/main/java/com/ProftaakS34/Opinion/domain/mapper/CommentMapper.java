@@ -9,6 +9,9 @@ import com.ProftaakS34.Opinion.web.api.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CommentMapper {
     private final UserMapper userMapper;
@@ -25,6 +28,14 @@ public class CommentMapper {
         dao.setId(model.getId());
         dao.setPoster(poster);
         dao.setTimeStamp(model.getTimeStamp());
+
+        List<CommentDAO> replies = new ArrayList<>();
+        for(Comment r : model.getReplies()){
+            replies.add(toDAO(r));
+        }
+
+        dao.setReplies(replies);
+
         return dao;
     }
 
@@ -35,6 +46,13 @@ public class CommentMapper {
         model.setId(dao.getId());
         model.setPoster(poster);
         model.setTimeStamp(dao.getTimeStamp());
+
+        List<Comment> replies = new ArrayList<>();
+        for(CommentDAO r: dao.getReplies()){
+            replies.add(toModel(r));
+        }
+        model.setReplies(replies);
+
         return model;
     }
 
@@ -45,6 +63,13 @@ public class CommentMapper {
         dto.setId(model.getId());
         dto.setPoster(poster);
         dto.setTimeStamp(model.getTimeStamp());
+
+        List<CommentDTO> replies = new ArrayList<>();
+        for(Comment r : model.getReplies()){
+            replies.add((toDTO(r)));
+        }
+        dto.setReplies(replies);
+
         return dto;
     }
 }
