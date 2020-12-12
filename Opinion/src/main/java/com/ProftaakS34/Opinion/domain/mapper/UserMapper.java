@@ -10,7 +10,7 @@ public class UserMapper {
     public UserDAO toDAO(User model){
         UserDAO dao = new UserDAO();
         dao.setId(model.getId());
-        dao.setPassword(model.getPassword());
+        dao.setEncryptedPassword(model.getPassword());
         dao.setUsername(model.getUsername());
         return dao;
     }
@@ -18,7 +18,7 @@ public class UserMapper {
     public User toModel(UserDAO dao){
         User model = new User();
         model.setId(dao.getId());
-        model.setPassword(dao.getPassword());
+        model.setPassword(dao.getEncryptedPassword());
         model.setUsername(dao.getUsername());
         return model;
     }
