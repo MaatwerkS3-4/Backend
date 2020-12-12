@@ -64,7 +64,7 @@ public class CommentController {
     @ApiResponses( value = {
             @ApiResponse(code = 201, message = "Created - comment has been posted")
     })
-    @PostMapping("/{discussionId}/comment/{commentId}")
+    @PostMapping("/{discussionId}/reply/{commentId}")
     public ResponseEntity<CommentDTO> saveReply(
             @PathVariable long discussionId, @PathVariable long commentId, @RequestBody CreateCommentDTO dto){
         Comment comment = commentService.saveReply(discussionId, dto.getPosterId(), commentId, dto.getContent());
