@@ -25,7 +25,7 @@ public class DiscussionDAO {
     @Column(name = "subject")
     private String subject;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition="TEXT")
     private String description;
 
     @Column(name = "time_stamp")

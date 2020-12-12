@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class CommentDAO {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition="TEXT")
     private String content;
 
     @Column(name = "time_stamp")
