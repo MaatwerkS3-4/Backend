@@ -76,10 +76,15 @@ public class DiscussionService {
         if(description == null || description.isEmpty()) throw new IllegalArgumentException("description is null or empty");
         if(tags.size() > 3) throw new IllegalArgumentException("More than 3 tags");
 
+        List<String> tagsFiltered = new ArrayList<>();
+        for(String t : tags){
+            if(!t.isBlank() && !t.isEmpty()) tagsFiltered.add(t.toLowerCase());
+        }
+
         User poster = userService.findUserById(userId);
         if(poster == null) throw new IllegalArgumentException("user is null or incorrect");
 
-        Discussion model = new Discussion(subject, description, poster, tags.stream().map(String::toLowerCase).collect(Collectors.toList()));
+        Discussion model = new Discussion(subject, description, poster, tagsFiltered);
         DiscussionDAO dao = discussionRepository.save(discussionMapper.toDAO(model));
         return discussionMapper.toModel(dao);
     }
