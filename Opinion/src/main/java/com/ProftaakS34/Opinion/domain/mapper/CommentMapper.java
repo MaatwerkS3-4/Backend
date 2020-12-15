@@ -63,7 +63,6 @@ public class CommentMapper {
         CommentDTO dto = new CommentDTO();
         dto.setContent(model.getContent());
         dto.setId(model.getId());
-        dto.setPoster(poster);
         dto.setTimeStamp(model.getTimeStamp());
 
         List<CommentDTO> replies = new ArrayList<>();

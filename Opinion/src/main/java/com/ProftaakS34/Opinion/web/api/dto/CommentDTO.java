@@ -16,7 +16,6 @@ import java.util.List;
 public class CommentDTO {
     private long id;
     private String content;
-    private UserDTO poster;
     private Date timeStamp;
     private List<CommentDTO> replies;
 }

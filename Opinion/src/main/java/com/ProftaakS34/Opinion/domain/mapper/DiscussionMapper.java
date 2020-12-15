@@ -79,7 +79,6 @@ public class DiscussionMapper {
         dto.setComments(comments);
         dto.setDescription(model.getDescription());
         dto.setId(model.getId());
-        dto.setPoster(poster);
         dto.setSubject(model.getSubject());
         dto.setTags(model.getTags());
         return dto;
