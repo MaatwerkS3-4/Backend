@@ -18,4 +18,5 @@ public class DiscussionDTO {
     private String description;
     private UserDTO poster;
     private List<CommentDTO> comments = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
 }

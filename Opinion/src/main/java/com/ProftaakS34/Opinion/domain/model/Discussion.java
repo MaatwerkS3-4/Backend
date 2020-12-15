@@ -21,11 +21,13 @@ public class Discussion {
     private Date timeStamp;
     private User poster;
     private List<Comment> comments = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
 
-    public Discussion(String subject, String description, User poster) {
+    public Discussion(String subject, String description, User poster, List<String> tags) {
         this.subject = subject;
         this.description = description;
         this.timeStamp = new Date();
         this.poster = poster;
+        this.tags = tags;
     }
 }

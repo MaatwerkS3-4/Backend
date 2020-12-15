@@ -37,4 +37,7 @@ public class DiscussionDAO {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CommentDAO> comments = new ArrayList<>();
+
+    @ElementCollection
+    public List<String> tags = new ArrayList<>();
 }

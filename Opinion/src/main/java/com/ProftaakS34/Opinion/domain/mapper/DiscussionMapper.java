@@ -41,6 +41,7 @@ public class DiscussionMapper {
         dao.setSubject(model.getSubject());
         dao.setDescription(model.getDescription());
         dao.setTimeStamp(model.getTimeStamp());
+        dao.setTags(model.getTags());
 
         return dao;
     }
@@ -59,6 +60,7 @@ public class DiscussionMapper {
         model.setPoster(poster);
         model.setDescription(dao.getDescription());
         model.setTimeStamp(dao.getTimeStamp());
+        model.setTags(dao.getTags());
 
         return model;
     }
@@ -76,6 +78,7 @@ public class DiscussionMapper {
         dto.setId(model.getId());
         dto.setPoster(poster);
         dto.setSubject(model.getSubject());
+        dto.setTags(model.getTags());
         return dto;
     }
 }

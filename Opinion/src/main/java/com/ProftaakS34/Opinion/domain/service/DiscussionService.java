@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DiscussionService {
@@ -70,13 +71,15 @@ public class DiscussionService {
         return discussions;
     }
 
-    public Discussion postDiscussion(long userId, String subject, String description) {
+    public Discussion postDiscussion(long userId, String subject, String description, List<String> tags) {
         if(subject == null || subject.isEmpty()) throw new IllegalArgumentException("subject is null or empty");
         if(description == null || description.isEmpty()) throw new IllegalArgumentException("description is null or empty");
+        if(tags.size() > 3) throw new IllegalArgumentException("More than 3 tags");
+
         User poster = userService.findUserById(userId);
         if(poster == null) throw new IllegalArgumentException("user is null or incorrect");
 
-        Discussion model = new Discussion(subject, description, poster);
+        Discussion model = new Discussion(subject, description, poster, tags.stream().map(String::toLowerCase).collect(Collectors.toList()));
         DiscussionDAO dao = discussionRepository.save(discussionMapper.toDAO(model));
         return discussionMapper.toModel(dao);
     }
