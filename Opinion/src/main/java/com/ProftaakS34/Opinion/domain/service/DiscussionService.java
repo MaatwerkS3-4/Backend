@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,6 +69,7 @@ public class DiscussionService {
             discussions.add(discussionMapper.toModel(p));
         }
 
+        discussions.sort(Comparator.comparing(Discussion::getTimeStamp).reversed());
         return discussions;
     }
 
@@ -87,5 +89,13 @@ public class DiscussionService {
         Discussion model = new Discussion(subject, description, poster, tagsFiltered);
         DiscussionDAO dao = discussionRepository.save(discussionMapper.toDAO(model));
         return discussionMapper.toModel(dao);
+    }
+
+    private void sortReplies(Comment comment){
+        for(Comment c: comment.getReplies()){
+            sortReplies(c);
+        }
+
+        comment.getReplies().sort(Comparator.comparing(Comment::getTimeStamp).reversed());
     }
 }

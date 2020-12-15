@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -51,6 +52,7 @@ public class CommentMapper {
         for(CommentDAO r: dao.getReplies()){
             replies.add(toModel(r));
         }
+        replies.sort(Comparator.comparing(Comment::getTimeStamp).reversed());
         model.setReplies(replies);
 
         return model;
