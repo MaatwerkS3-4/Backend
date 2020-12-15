@@ -108,6 +108,7 @@ public class DiscussionInfoController {
                 userMapper.toDTO(model.getPoster()),
                 parCount,
                 comCount,
-                model.getTimeStamp());
+                model.getTimeStamp(),
+                model.getTags());
     }
 }
