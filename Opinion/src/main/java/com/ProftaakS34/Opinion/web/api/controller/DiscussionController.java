@@ -1,5 +1,6 @@
 package com.ProftaakS34.Opinion.web.api.controller;
 
+import com.ProftaakS34.Opinion.authentication.AuthenticationService;
 import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/discussion")
 @Api(tags = "Discussions")
@@ -25,13 +28,15 @@ public class DiscussionController {
     private final DiscussionMapper discussionMapper;
     private final CommentService commentService;
     private final UserMapper userMapper;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public DiscussionController(DiscussionService discussionService, DiscussionMapper discussionMapper, CommentService commentService, UserMapper userMapper) {
+    public DiscussionController(DiscussionService discussionService, DiscussionMapper discussionMapper, CommentService commentService, UserMapper userMapper, AuthenticationService authenticationService) {
         this.discussionService = discussionService;
         this.discussionMapper = discussionMapper;
         this.commentService = commentService;
         this.userMapper = userMapper;
+        this.authenticationService = authenticationService;
     }
 
     /**
@@ -67,7 +72,9 @@ public class DiscussionController {
             @ApiResponse(code = 201, message = "Created - discussion has been created")
     })
     @PostMapping
-    private ResponseEntity<DiscussionDTO> saveDiscussion(@RequestBody CreateDiscussionDTO dto){
+    private ResponseEntity<DiscussionDTO> saveDiscussion(@RequestBody CreateDiscussionDTO dto, HttpServletRequest request){
+        String jwt = request.getHeader("Authorization");
+        if (!authenticationService.userLoggedIn(jwt)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         Discussion discussion = discussionService.postDiscussion(dto.getUserId(), dto.getSubject(), dto.getDescription(), dto.getTags());
         DiscussionDTO resource = discussionMapper.toDTO(discussion);
 
