@@ -76,13 +76,13 @@ public class DiscussionService {
     public Discussion postDiscussion(long userId, String subject, String description, List<String> tags) {
         if(subject == null || subject.isEmpty()) throw new IllegalArgumentException("subject is null or empty");
         if(description == null || description.isEmpty()) throw new IllegalArgumentException("description is null or empty");
-        if(tags.size() > 3) throw new IllegalArgumentException("More than 3 tags");
-
         List<String> tagsFiltered = new ArrayList<>();
-        for(String t : tags){
-            if(!t.isBlank() && !t.isEmpty()) tagsFiltered.add(t.toLowerCase());
+        if (tags != null && !tags.isEmpty()) {
+            if (tags.size() > 3) throw new IllegalArgumentException("More than 3 tags");
+            for (String t : tags) {
+                if (!t.isBlank() && !t.isEmpty()) tagsFiltered.add(t.toLowerCase());
+            }
         }
-
         User poster = userService.findUserById(userId);
         if(poster == null) throw new IllegalArgumentException("user is null or incorrect");
 
