@@ -75,7 +75,7 @@ public class DiscussionController {
     private ResponseEntity<DiscussionDTO> saveDiscussion(@RequestBody CreateDiscussionDTO dto, HttpServletRequest request){
         String jwt = request.getHeader("Authorization");
         if (!authenticationService.userLoggedIn(jwt)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        Discussion discussion = discussionService.postDiscussion(dto.getUserId(), dto.getSubject(), dto.getDescription(), dto.getTags(), dto.getCategory());
+        Discussion discussion = discussionService.postDiscussion(dto.getUserId(), dto.getSubject(), dto.getDescription(), dto.getTags());
         DiscussionDTO resource = discussionMapper.toDTO(discussion);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);

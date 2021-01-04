@@ -19,6 +19,5 @@ public class CreateDiscussionDTO {
     @ApiModelProperty(
             value = "A maximum of 3 tags"
     )
-    private List<String> tags;
-    private Category category;
+    private List<Category> tags;
 }

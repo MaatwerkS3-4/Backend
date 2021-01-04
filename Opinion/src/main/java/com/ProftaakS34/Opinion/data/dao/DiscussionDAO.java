@@ -40,9 +40,5 @@ public class DiscussionDAO {
     private List<CommentDAO> comments = new ArrayList<>();
 
     @ElementCollection
-    public List<String> tags = new ArrayList<>();
-
-    @Column(name = "category")
-    @Enumerated(value = EnumType.ORDINAL)
-    public Category category;
+    public List<Category> tags = new ArrayList<>();
 }

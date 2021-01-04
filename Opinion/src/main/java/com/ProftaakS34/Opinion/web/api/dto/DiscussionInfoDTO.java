@@ -19,6 +19,5 @@ public class DiscussionInfoDTO {
     private int numberOfParticipants;
     private int numberOfComments;
     private Date timeStamp;
-    private List<String> tags;
-    private Category category;
+    private List<Category> tags;
 }

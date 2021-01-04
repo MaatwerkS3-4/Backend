@@ -18,6 +18,5 @@ public class DiscussionDTO {
     private String subject;
     private String description;
     private List<CommentDTO> comments = new ArrayList<>();
-    private List<String> tags = new ArrayList<>();
-    private Category category;
+    private List<Category> tags = new ArrayList<>();
 }
