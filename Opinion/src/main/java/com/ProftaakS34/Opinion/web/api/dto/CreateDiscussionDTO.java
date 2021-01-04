@@ -1,5 +1,6 @@
 package com.ProftaakS34.Opinion.web.api.dto;
 
+import com.ProftaakS34.Opinion.domain.model.Category;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,4 +20,5 @@ public class CreateDiscussionDTO {
             value = "A maximum of 3 tags"
     )
     private List<String> tags;
+    private Category category;
 }

@@ -1,5 +1,6 @@
 package com.ProftaakS34.Opinion.data.dao;
 
+import com.ProftaakS34.Opinion.domain.model.Category;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,4 +41,8 @@ public class DiscussionDAO {
 
     @ElementCollection
     public List<String> tags = new ArrayList<>();
+
+    @Column(name = "category")
+    @Enumerated(value = EnumType.ORDINAL)
+    public Category category;
 }

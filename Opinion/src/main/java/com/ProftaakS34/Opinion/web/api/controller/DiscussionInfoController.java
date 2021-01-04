@@ -109,6 +109,7 @@ public class DiscussionInfoController {
                 parCount,
                 comCount,
                 model.getTimeStamp(),
-                model.getTags());
+                model.getTags(),
+                model.getCategory());
     }
 }

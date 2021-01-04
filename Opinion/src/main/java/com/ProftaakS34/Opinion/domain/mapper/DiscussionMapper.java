@@ -3,6 +3,7 @@ package com.ProftaakS34.Opinion.domain.mapper;
 import com.ProftaakS34.Opinion.data.dao.CommentDAO;
 import com.ProftaakS34.Opinion.data.dao.DiscussionDAO;
 import com.ProftaakS34.Opinion.data.dao.UserDAO;
+import com.ProftaakS34.Opinion.domain.model.Category;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
@@ -43,6 +44,7 @@ public class DiscussionMapper {
         dao.setDescription(model.getDescription());
         dao.setTimeStamp(model.getTimeStamp());
         dao.setTags(model.getTags());
+        dao.setCategory(model.getCategory());
 
         return dao;
     }
@@ -64,6 +66,7 @@ public class DiscussionMapper {
         model.setDescription(dao.getDescription());
         model.setTimeStamp(dao.getTimeStamp());
         model.setTags(dao.getTags());
+        model.setCategory(dao.getCategory());
 
         return model;
     }
@@ -81,6 +84,7 @@ public class DiscussionMapper {
         dto.setId(model.getId());
         dto.setSubject(model.getSubject());
         dto.setTags(model.getTags());
+        dto.setCategory(model.getCategory());
         return dto;
     }
 }
