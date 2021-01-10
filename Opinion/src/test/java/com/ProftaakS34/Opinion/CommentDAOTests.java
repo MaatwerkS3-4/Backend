@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 @SpringBootTest
-public class CommentTests {
+public class CommentDAOTests {
     public CommentService commentRepo;
     public UserService userRepo;
     public UserMapper userMapper;
