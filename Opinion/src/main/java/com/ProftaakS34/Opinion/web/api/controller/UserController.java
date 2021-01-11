@@ -88,7 +88,7 @@ public class UserController {
         try {
             User user = userService.saveUser(dto.getUsername(), dto.getPassword());
             UserDTO resource = userMapper.toDTO(user);
-            String jwt = authservice.authorizeUserLogin(dto.getUsername());
+            String jwt = authservice.authorizeUserLogin(String.valueOf(user.getId()));
             resource.setJwt(jwt);
             return ResponseEntity.status(HttpStatus.CREATED).body(resource);
         } catch (Exception e) {
@@ -109,7 +109,7 @@ public class UserController {
         try {
             User user = userService.logIn(dto.getUsername(), dto.getPassword());
             UserDTO resource = userMapper.toDTO(user);
-            String jwt = authservice.authorizeUserLogin(dto.getUsername());
+            String jwt = authservice.authorizeUserLogin(String.valueOf(user.getId()));
             resource.setJwt(jwt);
             return ResponseEntity.status(HttpStatus.OK).body(resource);
         } catch(Exception e ) {

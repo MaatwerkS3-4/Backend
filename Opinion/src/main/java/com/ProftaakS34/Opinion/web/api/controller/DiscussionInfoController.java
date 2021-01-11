@@ -1,8 +1,10 @@
 package com.ProftaakS34.Opinion.web.api.controller;
 
+import com.ProftaakS34.Opinion.authentication.AuthenticationService;
 import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
+import com.ProftaakS34.Opinion.domain.model.User;
 import com.ProftaakS34.Opinion.domain.service.CommentService;
 import com.ProftaakS34.Opinion.domain.service.DiscussionService;
 import com.ProftaakS34.Opinion.web.api.dto.DiscussionInfoDTO;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +33,15 @@ public class DiscussionInfoController {
     private final CommentService commentService;
     private final UserMapper userMapper;
     private final DiscussionMapper discussionMapper;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public DiscussionInfoController(DiscussionService discussionService, CommentService commentService, UserMapper userMapper, DiscussionMapper discussionMapper) {
+    public DiscussionInfoController(DiscussionService discussionService, CommentService commentService, UserMapper userMapper, DiscussionMapper discussionMapper, AuthenticationService authenticationService) {
         this.discussionService = discussionService;
         this.commentService = commentService;
         this.userMapper = userMapper;
         this.discussionMapper = discussionMapper;
+        this.authenticationService = authenticationService;
     }
 
     /**
@@ -50,10 +56,11 @@ public class DiscussionInfoController {
             @ApiResponse(code = 200, message = "Ok - the list info about existing discussions has been returned")
     })
     @GetMapping
-    private ResponseEntity<List<DiscussionInfoDTO>> getAllDiscussionInfos(){
+    private ResponseEntity<List<DiscussionInfoDTO>> getAllDiscussionInfos(HttpServletRequest request){
+        String jwt = request.getHeader("Authorization");
         List<DiscussionInfoDTO> resource = new ArrayList<>();
         for(Discussion p : discussionService.findAllDiscussions()){
-            resource.add(toDTO(p));
+            resource.add(toDTO(p,jwt));
         }
 
         return ResponseEntity.ok(resource);
@@ -72,9 +79,10 @@ public class DiscussionInfoController {
             @ApiResponse(code = 200, message = "Ok - the info about the specific discussion has been returned")
     })
     @GetMapping("/id/{discussionId}")
-    public ResponseEntity<DiscussionInfoDTO> getDiscussionInfoById(@PathVariable long discussionId){
+    public ResponseEntity<DiscussionInfoDTO> getDiscussionInfoById(@PathVariable long discussionId, HttpServletRequest request){
         Discussion discussion = discussionService.findDiscussionById(discussionId);
-        DiscussionInfoDTO resource = toDTO(discussion);
+        String jwt = request.getHeader("Authorization");
+        DiscussionInfoDTO resource = toDTO(discussion, jwt);
         return ResponseEntity.ok(resource);
     }
 
@@ -91,16 +99,25 @@ public class DiscussionInfoController {
             @ApiResponse(code = 200, message = "Ok - the info about the specific discussion has been returned")
     })
     @GetMapping("/subject/{subject}")
-    public ResponseEntity<DiscussionInfoDTO> getDiscussionInfoById(@PathVariable String subject){
+    public ResponseEntity<DiscussionInfoDTO> getDiscussionInfoById(@PathVariable String subject, HttpServletRequest request){
         Discussion discussion = discussionService.findDiscussionBySubject(subject);
-        DiscussionInfoDTO resource = toDTO(discussion);
+        String jwt = request.getHeader("Authorization");
+        DiscussionInfoDTO resource = toDTO(discussion, jwt);
         return ResponseEntity.ok(resource);
     }
 
-    private DiscussionInfoDTO toDTO(Discussion model){
+    private DiscussionInfoDTO toDTO(Discussion model, String jwt){
 
         int parCount = commentService.getNumberOfParticipantsByDiscussion(model);
         int comCount = model.getComments().size();
+        int upvoteCount = model.getUpvoters().size();
+        boolean userUpvoted = false;
+        if (jwt!=null && authenticationService.userLoggedIn(jwt)) {
+            long id = Long.parseLong(authenticationService.getId(jwt));
+            for (User upvoter : model.getUpvoters()) {
+                if (upvoter.getId() == id) userUpvoted = true;
+            }
+        }
 
         return new DiscussionInfoDTO(
                 model.getId(),
@@ -109,6 +126,8 @@ public class DiscussionInfoController {
                 parCount,
                 comCount,
                 model.getTimeStamp(),
-                model.getTags());
+                model.getTags(),
+                userUpvoted,
+                upvoteCount);
     }
 }

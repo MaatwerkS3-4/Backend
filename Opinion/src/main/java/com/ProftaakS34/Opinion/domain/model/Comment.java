@@ -18,6 +18,7 @@ public class Comment {
     private User poster;
     private Date timeStamp;
     private List<Comment> replies = new ArrayList<>();
+    private List<User> upvoters = new ArrayList<>();
 
     public Comment(String content, User poster) {
         this.content = content;

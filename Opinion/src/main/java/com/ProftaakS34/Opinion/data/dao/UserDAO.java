@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,6 +28,12 @@ public class UserDAO {
 
     @Column(name = "salt")
     private String salt;
+
+    @ManyToMany(mappedBy = "commentUpvoters")
+    private List<CommentDAO> commentUpvotes = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "discussionUpvoters")
+    private List<DiscussionDAO> discussionUpvotes = new ArrayList<>();
 
     public UserDAO(String username, String encryptedPassword) {
         this.username = username;

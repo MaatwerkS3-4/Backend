@@ -22,6 +22,7 @@ public class Discussion {
     private User poster;
     private List<Comment> comments = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
+    private List<User> upvoters = new ArrayList<>();
 
     public Discussion(String subject, String description, User poster, List<String> tags) {
         this.subject = subject;

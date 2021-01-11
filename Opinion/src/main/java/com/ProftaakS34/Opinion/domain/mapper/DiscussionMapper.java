@@ -36,6 +36,13 @@ public class DiscussionMapper {
         }
 
         DiscussionDAO dao = new DiscussionDAO();
+
+        List<UserDAO> users = new ArrayList<>();
+        for (User upvoter : model.getUpvoters()) {
+            users.add(userMapper.toDAO(upvoter));
+        }
+        dao.setDiscussionUpvoters(users);
+
         dao.setComments(comments);
         dao.setId(model.getId());
         dao.setPoster(poster);
@@ -57,6 +64,13 @@ public class DiscussionMapper {
         comments.sort(Comparator.comparing(Comment::getTimeStamp).reversed());
 
         Discussion model = new Discussion();
+
+        List<User> users = new ArrayList<>();
+        for (UserDAO discussionUpvoter : dao.getDiscussionUpvoters()) {
+            users.add(userMapper.toModel(discussionUpvoter));
+        }
+        model.setUpvoters(users);
+
         model.setComments(comments);
         model.setId(dao.getId());
         model.setSubject(dao.getSubject());
@@ -73,6 +87,26 @@ public class DiscussionMapper {
         List<CommentDTO> comments = new ArrayList<>();
         for(Comment c : model.getComments()){
             comments.add(commentMapper.toDTO(c));
+        }
+
+        DiscussionDTO dto = new DiscussionDTO();
+        dto.setComments(comments);
+        dto.setDescription(model.getDescription());
+        dto.setId(model.getId());
+        dto.setSubject(model.getSubject());
+        dto.setTags(model.getTags());
+        return dto;
+    }
+
+    public DiscussionDTO toDTO(Discussion model, long uid) {
+        UserDTO poster = userMapper.toDTO(model.getPoster());
+        List<CommentDTO> comments = new ArrayList<>();
+        for(Comment c : model.getComments()){
+            CommentDTO comment = commentMapper.toDTO(c);
+            for (User upvoter : c.getUpvoters()) {
+                if (upvoter.getId() == uid) comment.setUpvotedByUser(true);
+            }
+            comments.add(comment);
         }
 
         DiscussionDTO dto = new DiscussionDTO();

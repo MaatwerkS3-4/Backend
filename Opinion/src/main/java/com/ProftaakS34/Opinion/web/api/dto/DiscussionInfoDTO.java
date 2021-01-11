@@ -19,4 +19,6 @@ public class DiscussionInfoDTO {
     private int numberOfComments;
     private Date timeStamp;
     private List<String> tags;
+    private boolean upvotedByUser;
+    private int score;
 }

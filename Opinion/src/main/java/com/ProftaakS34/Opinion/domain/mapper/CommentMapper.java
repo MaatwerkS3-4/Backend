@@ -30,6 +30,12 @@ public class CommentMapper {
         dao.setPoster(poster);
         dao.setTimeStamp(model.getTimeStamp());
 
+        List<UserDAO> upvoters = new ArrayList<>();
+        for (User upvoter : model.getUpvoters()) {
+            upvoters.add(userMapper.toDAO(upvoter));
+        }
+        dao.setCommentUpvoters(upvoters);
+
         List<CommentDAO> replies = new ArrayList<>();
         for(Comment r : model.getReplies()){
             replies.add(toDAO(r));
@@ -48,6 +54,12 @@ public class CommentMapper {
         model.setPoster(poster);
         model.setTimeStamp(dao.getTimeStamp());
 
+        List<User> upvoters = new ArrayList<>();
+        for (UserDAO commentUpvoter : dao.getCommentUpvoters()) {
+            upvoters.add(userMapper.toModel(commentUpvoter));
+        }
+        model.setUpvoters(upvoters);
+
         List<Comment> replies = new ArrayList<>();
         for(CommentDAO r: dao.getReplies()){
             replies.add(toModel(r));
@@ -64,6 +76,9 @@ public class CommentMapper {
         dto.setContent(model.getContent());
         dto.setId(model.getId());
         dto.setTimeStamp(model.getTimeStamp());
+        dto.setScore(model.getUpvoters().size());
+        dto.setUpvotedByUser(false);
+        dto.setScore(model.getUpvoters().size());
 
         List<CommentDTO> replies = new ArrayList<>();
         for(Comment r : model.getReplies()){

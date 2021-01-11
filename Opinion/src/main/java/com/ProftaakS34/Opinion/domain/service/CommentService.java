@@ -2,6 +2,7 @@ package com.ProftaakS34.Opinion.domain.service;
 
 import com.ProftaakS34.Opinion.data.dao.CommentDAO;
 import com.ProftaakS34.Opinion.data.dao.DiscussionDAO;
+import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.data.repository.CommentRepository;
 import com.ProftaakS34.Opinion.data.repository.DiscussionRepository;
 import com.ProftaakS34.Opinion.domain.mapper.CommentMapper;
@@ -102,5 +103,12 @@ public class CommentService {
         }
 
         return uniqueUserDAOS.size();
+    }
+
+    public void upvoteComment(long commentId, long userId) {
+        CommentDAO comment = commentRepository.findById(commentId).get();
+        UserDAO user = userMapper.toDAO(userService.findUserById(userId));
+        comment.getCommentUpvoters().add(user);
+        commentRepository.save(comment);
     }
 }

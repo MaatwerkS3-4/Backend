@@ -1,6 +1,7 @@
 package com.ProftaakS34.Opinion.domain.service;
 
 import com.ProftaakS34.Opinion.data.dao.DiscussionDAO;
+import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.data.repository.DiscussionRepository;
 import com.ProftaakS34.Opinion.domain.mapper.CommentMapper;
 import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
@@ -97,5 +98,12 @@ public class DiscussionService {
         }
 
         comment.getReplies().sort(Comparator.comparing(Comment::getTimeStamp).reversed());
+    }
+
+    public void upvoteDiscussion(long discussionId, long userId) {
+        DiscussionDAO discussion = discussionRepository.findById(discussionId).get();
+        UserDAO user = userMapper.toDAO(userService.findUserById(userId));
+        discussion.getDiscussionUpvoters().add(user);
+        discussionRepository.save(discussion);
     }
 }

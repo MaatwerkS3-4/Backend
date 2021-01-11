@@ -18,4 +18,6 @@ public class CommentDTO {
     private String content;
     private Date timeStamp;
     private List<CommentDTO> replies;
+    private int score;
+    private boolean upvotedByUser;
 }

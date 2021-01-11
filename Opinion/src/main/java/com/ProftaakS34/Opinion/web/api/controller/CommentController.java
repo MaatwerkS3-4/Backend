@@ -80,4 +80,12 @@ public class CommentController {
         CommentDTO resource = commentMapper.toDTO(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);
     }
+    @PostMapping("/{commentId}/upvote")
+    public ResponseEntity upvote (@PathVariable long commentId, HttpServletRequest request) {
+        String jwt = request.getHeader("Authorization");
+        if (!authenticationService.userLoggedIn(jwt)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        long userId = Long.parseLong(authenticationService.getId(jwt));
+        commentService.upvoteComment(commentId,userId);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }

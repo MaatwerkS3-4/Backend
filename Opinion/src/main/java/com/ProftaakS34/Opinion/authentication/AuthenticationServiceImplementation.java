@@ -12,8 +12,8 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
         this.authorizationService = authorizationService;
     }
     @Override
-    public String authorizeUserLogin(String username) {
-        return authorizationService.authorizeRequest("loggedIn" + username);
+    public String authorizeUserLogin(String id) {
+        return authorizationService.authorizeRequest("loggedIn" + id);
     }
     @Override
     public String getTokenSubject(String jwt){
@@ -23,6 +23,11 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
                 .build()
                 .verify(jwt.replace(AuthenticationConstants.TOKEN_PREFIX, ""))
                 .getSubject();
+    }
+
+    @Override
+    public String getId(String jwt) {
+        return getTokenSubject(jwt).substring(8);
     }
 
     @Override

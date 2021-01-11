@@ -35,6 +35,14 @@ public class DiscussionDAO {
     @ManyToOne
     private UserDAO poster;
 
+    @ManyToMany(cascade = {CascadeType.DETACH})
+    @JoinTable(
+            name = "discussion_upvote",
+            joinColumns = {@JoinColumn(name = "discussion_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private List<UserDAO> discussionUpvoters = new ArrayList<>();
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CommentDAO> comments = new ArrayList<>();
 
