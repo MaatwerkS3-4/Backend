@@ -1,0 +1,101 @@
+package com.ProftaakS34.Opinion;
+
+import com.ProftaakS34.Opinion.data.dao.CommentDAO;
+import com.ProftaakS34.Opinion.data.dao.DiscussionDAO;
+import com.ProftaakS34.Opinion.data.dao.UserDAO;
+import com.ProftaakS34.Opinion.domain.mapper.CommentMapper;
+import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
+import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
+import com.ProftaakS34.Opinion.domain.model.Comment;
+import com.ProftaakS34.Opinion.domain.model.Discussion;
+import com.ProftaakS34.Opinion.domain.model.User;
+import com.ProftaakS34.Opinion.web.api.dto.DiscussionDTO;
+import com.ProftaakS34.Opinion.web.api.dto.UserDTO;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+@SpringBootTest
+public class DiscussionMapperTests {
+    public DiscussionMapper mapper;
+    public DiscussionDAO discDAO;
+    public DiscussionDTO discDTO;
+    public Discussion discussion;
+
+    private DiscussionMapperTests() {
+        discDAO = new DiscussionDAO();
+        discDAO.setId(1);
+        discDAO.setSubject("Subject");
+        discDAO.setDescription("Description");
+            UserDAO userDAO = new UserDAO();
+            userDAO.setId(1);
+            userDAO.setUsername("A");
+            userDAO.setEncryptedPassword("B");
+        discDAO.setPoster(userDAO);
+            Date date = new Date(System.currentTimeMillis());
+        discDAO.setTimeStamp(date);
+        discDAO.setComments(new ArrayList<>());
+        discDAO.setTags(new ArrayList<>());
+
+        discDTO = new DiscussionDTO();
+        discDTO.setId(1);
+        discDTO.setSubject("Subject");
+        discDTO.setDescription("Description");
+        discDTO.setComments(new ArrayList<>());
+        discDTO.setTags(new ArrayList<>());
+
+        discussion = new Discussion();
+        discussion.setId(1);
+        discussion.setSubject("Subject");
+        discussion.setDescription("Description");
+            User user = new User();
+            user.setId(1);
+            user.setUsername("A");
+            user.setPassword("A");
+        discussion.setPoster(user);
+        discussion.setTimeStamp(date);
+        discussion.setComments(new ArrayList<>());
+        discussion.setTags(new ArrayList<>());
+    }
+
+
+    @BeforeEach
+    public void SetUp() {
+        UserMapper userMapper = new UserMapper();
+        CommentMapper commentMapper = new CommentMapper(userMapper);
+
+        mapper = new DiscussionMapper(userMapper, commentMapper);
+    }
+
+    @Test
+    public void ToDAOTest() {
+        DiscussionDAO newDAO = mapper.toDAO(discussion);
+
+        Assertions.assertEquals(discDAO.getId(), newDAO.getId());
+        Assertions.assertEquals(discDAO.getSubject(), newDAO.getSubject());
+        Assertions.assertEquals(discDAO.getDescription(), newDAO.getDescription());
+    }
+
+    @Test
+    public void toModelTest() {
+        Discussion newDisc = mapper.toModel(discDAO);
+
+        Assertions.assertEquals(discussion.getId(), newDisc.getId());
+        Assertions.assertEquals(discussion.getSubject(), newDisc.getSubject());
+        Assertions.assertEquals(discussion.getDescription(), newDisc.getDescription());
+    }
+
+    @Test
+    public void toDTOTest() {
+        DiscussionDTO newDTO = mapper.toDTO(discussion);
+
+        Assertions.assertEquals(discDTO.getId(), newDTO.getId());
+        Assertions.assertEquals(discDTO.getSubject(), newDTO.getSubject());
+        Assertions.assertEquals(discDTO.getDescription(), newDTO.getDescription());
+    }
+
+}

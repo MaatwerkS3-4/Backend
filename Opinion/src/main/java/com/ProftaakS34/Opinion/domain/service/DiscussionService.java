@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class DiscussionService {
@@ -24,24 +22,18 @@ public class DiscussionService {
     private final DiscussionRepository discussionRepository;
 
     private final UserService userService;
-    private final CommentService commentService;
 
     private final DiscussionMapper discussionMapper;
-    private final UserMapper userMapper;
-    private final CommentMapper commentMapper;
 
     @Autowired
     public DiscussionService(DiscussionRepository discussionRepository, UserService userService, CommentService commentService, DiscussionMapper discussionMapper, UserMapper userMapper, CommentMapper commentMapper) {
         this.discussionRepository = discussionRepository;
         this.userService = userService;
-        this.commentService = commentService;
         this.discussionMapper = discussionMapper;
-        this.userMapper = userMapper;
-        this.commentMapper = commentMapper;
     }
 
     public Discussion findDiscussionById(Long id) {
-        return discussionMapper.toModel(discussionRepository.findById(id).get());
+        return discussionMapper.toModel(discussionRepository.findById(id).orElse(null));
     }
 
     public Discussion findDiscussionBySubject(String subject) {
