@@ -80,6 +80,20 @@ public class CommentController {
         CommentDTO resource = commentMapper.toDTO(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);
     }
+
+    /**
+     * Upvote a comment
+     *
+     * @param commentId the id of the comment
+     * @param request the request, that we have to get the JWT out of
+     * @return
+     */
+    @ApiOperation(
+            value = "Upvote a comment"
+    )
+    @ApiResponses( value = {
+            @ApiResponse(code = 201, message = "Upvoted - comment has been upvoted")
+    })
     @PostMapping("/{commentId}/upvote")
     public ResponseEntity upvote (@PathVariable long commentId, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");

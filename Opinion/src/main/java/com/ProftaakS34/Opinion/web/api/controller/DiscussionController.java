@@ -92,6 +92,18 @@ public class DiscussionController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);
     }
+
+    /**
+     * Upvote a discussion
+     *
+     * @param discussionId the id of the discussion
+     * @param request the request we need to get the JWT
+     * @return
+     */
+    @ApiOperation(value= "Upvote a discussion")
+    @ApiResponses(value= {
+            @ApiResponse(code=201, message = "Upvoted - discussion has been upvoted")
+    })
     @PostMapping("/{discussionId}/upvote")
     private ResponseEntity upvoteDiscussion(@PathVariable long discussionId, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");
