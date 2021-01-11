@@ -126,8 +126,8 @@ public class DiscussionInfoController {
                 parCount,
                 comCount,
                 model.getTimeStamp(),
-                model.getTags(),
                 userUpvoted,
-                upvoteCount);
+                upvoteCount,
+                model.getTags());
     }
 }

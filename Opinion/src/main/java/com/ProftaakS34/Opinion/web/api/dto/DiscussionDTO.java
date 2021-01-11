@@ -1,5 +1,6 @@
 package com.ProftaakS34.Opinion.web.api.dto;
 
+import com.ProftaakS34.Opinion.domain.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,5 @@ public class DiscussionDTO {
     private String subject;
     private String description;
     private List<CommentDTO> comments = new ArrayList<>();
-    private List<String> tags = new ArrayList<>();
+    private List<Category> tags = new ArrayList<>();
 }

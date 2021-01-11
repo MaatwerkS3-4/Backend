@@ -1,5 +1,6 @@
 package com.ProftaakS34.Opinion;
 
+import com.ProftaakS34.Opinion.domain.model.Category;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
@@ -32,12 +33,16 @@ public class OpinionApplication {
 			User user2 = userService.saveUser("test user 2", "Yes2");
 			User user3 = userService.saveUser("test user 3", "Yes3");
 
-			List<String> tags1 = new ArrayList<>( Arrays.asList(
-					"tag 1", "tag 2", "tag 3"
+			List<Category> tags1 = new ArrayList<>( Arrays.asList(
+					Category.Business, Category.Education
 			));
 
-			List<String> tags2 = new ArrayList<>( Arrays.asList(
-					"tag 4", "tag 5"
+			List<Category> tags2 = new ArrayList<>( Arrays.asList(
+					Category.Philosophy
+			));
+
+			List<Category> tags3 = new ArrayList<>(Arrays.asList(
+					Category.Psychology, Category.Health, Category.Sport
 			));
 
 			Discussion discussion = discussionService.postDiscussion(user.getId(), "Etiam luctus scelerisque purus, non venenatis urna. Nam efficitur ante et justo pharetra.... ",
@@ -51,7 +56,7 @@ public class OpinionApplication {
 					"\n" +
 					"Donec porttitor nunc sem, luctus blandit mi porttitor a. Cras ornare dictum dui, ut viverra ex posuere ac. Mauris rhoncus, turpis at fermentum pulvinar, quam libero tincidunt odio, vel pretium quam ipsum eu massa. Nam nec commodo mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce ullamcorper molestie tellus, vel condimentum diam aliquet eu. Pellentesque lacus velit, pulvinar vel viverra eu, commodo nec orci. Nullam feugiat in lorem sit amet facilisis. Vivamus magna urna, elementum in tellus at, volutpat mollis nisi. Cras laoreet metus vitae tortor tristique tristique. Nulla ipsum purus, fringilla tristique mi et, efficitur viverra dolor. Fusce iaculis turpis eu tellus blandit sollicitudin. Suspendisse sem velit, maximus et massa sit amet, maximus mattis erat. Nunc augue lacus, egestas eu iaculis ac, aliquam sed elit.\n" +
 					"\n" +
-					"Pellentesque facilisis est sit amet erat cursus blandit. Duis vel pulvinar nunc. Ut sagittis nec mauris vitae pellentesque. Duis volutpat sem sit amet risus rhoncus, nec lacinia justo egestas. Duis consequat, nunc ac commodo rhoncus, dui ipsum imperdiet neque, ac bibendum lectus purus commodo quam. Pellentesque fringilla metus vel dignissim faucibus. Integer venenatis tellus at placerat gravida. Morbi lectus nunc, tempor et massa eget, auctor sagittis felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus semper scelerisque mi a ornare. Suspendisse eget scelerisque felis, ac accumsan erat. Morbi sagittis efficitur orci, sed lacinia enim mattis in. ", tags2);
+					"Pellentesque facilisis est sit amet erat cursus blandit. Duis vel pulvinar nunc. Ut sagittis nec mauris vitae pellentesque. Duis volutpat sem sit amet risus rhoncus, nec lacinia justo egestas. Duis consequat, nunc ac commodo rhoncus, dui ipsum imperdiet neque, ac bibendum lectus purus commodo quam. Pellentesque fringilla metus vel dignissim faucibus. Integer venenatis tellus at placerat gravida. Morbi lectus nunc, tempor et massa eget, auctor sagittis felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus semper scelerisque mi a ornare. Suspendisse eget scelerisque felis, ac accumsan erat. Morbi sagittis efficitur orci, sed lacinia enim mattis in. ", tags3);
 
 			Comment comment = commentService.saveComment(discussion.getId(), user.getId(), "Donec id tristique metus, in dignissim elit. Mauris mauris ex, pretium quis diam ac, faucibus commodo enim. Etiam efficitur posuere velit, sed efficitur ligula mattis sit amet. Curabitur.");
 			Comment comment6 = commentService.saveComment(discussion.getId(), user.getId(), "Ut quis porta ex, in lacinia massa. Morbi iaculis nulla a turpis pulvinar, eu varius risus feugiat. Pellentesque eu sem et nulla pharetra imperdiet. Nullam convallis lacus.");

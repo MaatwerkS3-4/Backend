@@ -55,7 +55,8 @@ public class SwaggerConfig {
                         new Tag("Comments", "Endpoints for comment interaction"),
                         new Tag("Discussions", "Endpoints for discussion interaction"),
                         new Tag("DiscussionInfo", "Endpoints for info about discussions"),
-                        new Tag("Users", "Endpoints for user interaction")
+                        new Tag("Users", "Endpoints for user interaction"),
+                        new Tag("Categories", "Endpoints for category interaction")
                 );
     }
 

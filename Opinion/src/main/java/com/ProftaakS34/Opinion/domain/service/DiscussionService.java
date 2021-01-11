@@ -6,6 +6,7 @@ import com.ProftaakS34.Opinion.data.repository.DiscussionRepository;
 import com.ProftaakS34.Opinion.domain.mapper.CommentMapper;
 import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
+import com.ProftaakS34.Opinion.domain.model.Category;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
@@ -74,20 +75,16 @@ public class DiscussionService {
         return discussions;
     }
 
-    public Discussion postDiscussion(long userId, String subject, String description, List<String> tags) {
+    public Discussion postDiscussion(long userId, String subject, String description, List<Category> tags) {
         if(subject == null || subject.isEmpty()) throw new IllegalArgumentException("subject is null or empty");
         if(description == null || description.isEmpty()) throw new IllegalArgumentException("description is null or empty");
-        List<String> tagsFiltered = new ArrayList<>();
-        if (tags != null && !tags.isEmpty()) {
-            if (tags.size() > 3) throw new IllegalArgumentException("More than 3 tags");
-            for (String t : tags) {
-                if (!t.isBlank() && !t.isEmpty()) tagsFiltered.add(t.toLowerCase());
-            }
-        }
+
+        if(tags.size() > 3) throw new IllegalArgumentException("More than 3 tags provided");
+        if(tags.size() < 1) throw new IllegalArgumentException("No tags provided");
+
         User poster = userService.findUserById(userId);
         if(poster == null) throw new IllegalArgumentException("user is null or incorrect");
-
-        Discussion model = new Discussion(subject, description, poster, tagsFiltered);
+        Discussion model = new Discussion(subject, description, poster, tags);
         DiscussionDAO dao = discussionRepository.save(discussionMapper.toDAO(model));
         return discussionMapper.toModel(dao);
     }

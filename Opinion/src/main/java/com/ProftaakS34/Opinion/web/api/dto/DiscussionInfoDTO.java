@@ -1,5 +1,6 @@
 package com.ProftaakS34.Opinion.web.api.dto;
 
+import com.ProftaakS34.Opinion.domain.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class DiscussionInfoDTO {
     private int numberOfParticipants;
     private int numberOfComments;
     private Date timeStamp;
-    private List<String> tags;
     private boolean upvotedByUser;
     private int score;
+    private List<Category> tags;
 }

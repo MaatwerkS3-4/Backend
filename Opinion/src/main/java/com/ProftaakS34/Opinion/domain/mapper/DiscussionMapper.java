@@ -3,6 +3,7 @@ package com.ProftaakS34.Opinion.domain.mapper;
 import com.ProftaakS34.Opinion.data.dao.CommentDAO;
 import com.ProftaakS34.Opinion.data.dao.DiscussionDAO;
 import com.ProftaakS34.Opinion.data.dao.UserDAO;
+import com.ProftaakS34.Opinion.domain.model.Category;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
