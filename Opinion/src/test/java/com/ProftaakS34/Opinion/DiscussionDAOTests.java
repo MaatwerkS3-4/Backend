@@ -8,6 +8,7 @@ import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.domain.mapper.CommentMapper;
 import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
+import com.ProftaakS34.Opinion.domain.model.Category;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.service.DiscussionService;
 import com.ProftaakS34.Opinion.domain.service.UserService;
@@ -26,7 +27,7 @@ public class DiscussionDAOTests {
     public CommentMapper commentMapper;
 
     public UserDAO correctUserDAO;
-    public List<String> discussionTags;
+    public List<Category> discussionTags;
 
 
     @BeforeEach
@@ -41,7 +42,8 @@ public class DiscussionDAOTests {
         userRepo.saveUser(correctUserDAO.getUsername(), correctUserDAO.getEncryptedPassword());
 
         discussionRepo = new DiscussionService(new MockDiscussionRepo(), userRepo, null, new DiscussionMapper(userMapper, commentMapper), userMapper, commentMapper);
-        discussionTags = new ArrayList<String>();
+        discussionTags = new ArrayList<>();
+        discussionTags.add(Category.Health);
     }
 
 
@@ -105,7 +107,7 @@ public class DiscussionDAOTests {
 
 
 
-   private DiscussionDAO DAOSetter(UserDAO poster, String subject, String description, List<String> tags) {
+   private DiscussionDAO DAOSetter(UserDAO poster, String subject, String description, List<Category> tags) {
         DiscussionDAO newDAO = new DiscussionDAO();
 
         newDAO.setPoster(poster);

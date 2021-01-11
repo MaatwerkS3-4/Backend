@@ -10,6 +10,7 @@ import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.domain.mapper.CommentMapper;
 import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
+import com.ProftaakS34.Opinion.domain.model.Category;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.service.CommentService;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @SpringBootTest
@@ -56,7 +58,10 @@ public class CommentDAOTests {
         correctDiscDAO.setPoster(correctUserDAO);
         correctDiscDAO.setSubject("Subject");
         correctDiscDAO.setDescription("Description");
-        correctDiscDAO.setTags(new ArrayList<String>());
+            List<Category> tagList = new ArrayList<>();
+            tagList.add(Category.Health);
+        correctDiscDAO.setTags(tagList);
+
 
         discussionRepo.postDiscussion(correctUserDAO.getId(), correctDiscDAO.getSubject(), correctDiscDAO.getDescription(), correctDiscDAO.getTags());
     }
