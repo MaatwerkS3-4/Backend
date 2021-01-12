@@ -10,6 +10,7 @@ import com.ProftaakS34.Opinion.domain.model.Category;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -97,10 +98,21 @@ public class DiscussionService {
         comment.getReplies().sort(Comparator.comparing(Comment::getTimeStamp).reversed());
     }
 
-    public void upvoteDiscussion(long discussionId, long userId) {
+    public void upvoteDiscussion(long discussionId, long userId) throws NotFoundException {
         DiscussionDAO discussion = discussionRepository.findById(discussionId).get();
         UserDAO user = userMapper.toDAO(userService.findUserById(userId));
+        if (user == null) throw new NotFoundException("User not found");
         discussion.getDiscussionUpvoters().add(user);
         discussionRepository.save(discussion);
+    }
+
+    public List<Discussion> findDiscussionsByPoster (long userId) throws NotFoundException {
+        UserDAO user = userMapper.toDAO(userService.findUserById(userId));
+        if (user == null) throw new NotFoundException("User not found");
+        List<Discussion> discussions = new ArrayList<>();
+        for (DiscussionDAO discussionDAO : discussionRepository.findAll()) {
+            if (discussionDAO.getPoster().getId() == userId) discussions.add(discussionMapper.toModel(discussionDAO));
+        }
+        return discussions;
     }
 }

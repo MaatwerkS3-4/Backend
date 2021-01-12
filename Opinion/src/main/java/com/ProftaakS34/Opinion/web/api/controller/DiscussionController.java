@@ -15,6 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -105,7 +106,7 @@ public class DiscussionController {
             @ApiResponse(code=201, message = "Upvoted - discussion has been upvoted")
     })
     @PostMapping("/{discussionId}/upvote")
-    private ResponseEntity upvoteDiscussion(@PathVariable long discussionId, HttpServletRequest request) {
+    private ResponseEntity upvoteDiscussion(@PathVariable long discussionId, HttpServletRequest request) throws NotFoundException {
         String jwt = request.getHeader("Authorization");
         if (!authenticationService.userLoggedIn(jwt)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         long userId = Long.parseLong(authenticationService.getId(jwt));

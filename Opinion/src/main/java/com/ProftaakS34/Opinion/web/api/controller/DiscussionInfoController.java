@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -104,6 +105,22 @@ public class DiscussionInfoController {
         String jwt = request.getHeader("Authorization");
         DiscussionInfoDTO resource = toDTO(discussion, jwt);
         return ResponseEntity.ok(resource);
+    }
+
+    @GetMapping("/user/")
+    public ResponseEntity<List<DiscussionInfoDTO>> getDiscussionInfosByPoster(HttpServletRequest request) {
+        try {
+            String jwt = request.getHeader("Authorization");
+            long userId = Long.parseLong(authenticationService.getId(jwt));
+            List<Discussion> discussions = discussionService.findDiscussionsByPoster(userId);
+            List<DiscussionInfoDTO> discussionInfos = new ArrayList<>();
+            for (Discussion discussion : discussions) {
+                discussionInfos.add(toDTO(discussion, jwt));
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(discussionInfos);
+        } catch (Exception e ) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     private DiscussionInfoDTO toDTO(Discussion model, String jwt){
