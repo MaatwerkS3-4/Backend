@@ -14,10 +14,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,7 +69,7 @@ public class DiscussionService {
             discussions.add(discussionMapper.toModel(p));
         }
 
-        discussions.sort(Comparator.comparing(Discussion::getTimeStamp).reversed());
+        Collections.shuffle(discussions);
         return discussions;
     }
 
@@ -94,8 +91,7 @@ public class DiscussionService {
         for(Comment c: comment.getReplies()){
             sortReplies(c);
         }
-
-        comment.getReplies().sort(Comparator.comparing(Comment::getTimeStamp).reversed());
+        Collections.shuffle(comment.getReplies());
     }
 
     public void upvoteDiscussion(long discussionId, long userId) throws NotFoundException {
