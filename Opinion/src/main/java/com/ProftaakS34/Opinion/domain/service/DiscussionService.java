@@ -40,7 +40,10 @@ public class DiscussionService {
     }
 
     public Discussion findDiscussionById(Long id) {
-        return discussionMapper.toModel(discussionRepository.findById(id).get());
+        if (discussionRepository.findById(id).orElse(null) != null) {
+            return discussionMapper.toModel(Objects.requireNonNull(discussionRepository.findById(id).orElse(null)));
+        }
+        return null;
     }
 
     public Discussion findDiscussionBySubject(String subject) {
@@ -51,16 +54,6 @@ public class DiscussionService {
             }
         }
         return null;
-    }
-
-    public List<Discussion> findDiscussionByPartialSubstring(String partialSubject) {
-        List<Discussion> matches = new ArrayList<>();
-        for(DiscussionDAO discussionDAO : discussionRepository.findAll()){
-            if(discussionDAO.getSubject().contains(partialSubject)){
-                matches.add(discussionMapper.toModel(discussionDAO));
-            }
-        }
-        return matches;
     }
 
     public List<Discussion> findAllDiscussions() {
@@ -84,13 +77,6 @@ public class DiscussionService {
         Discussion model = new Discussion(subject, description, poster, tags);
         DiscussionDAO dao = discussionRepository.save(discussionMapper.toDAO(model));
         return discussionMapper.toModel(dao);
-    }
-
-    private void sortReplies(Comment comment){
-        for(Comment c: comment.getReplies()){
-            sortReplies(c);
-        }
-        Collections.shuffle(comment.getReplies());
     }
 
     public void upvoteDiscussion(long discussionId, long userId) throws NotFoundException {
