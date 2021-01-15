@@ -15,7 +15,6 @@ import java.util.List;
 public class DiscussionInfoDTO {
     private long id;
     private String subject;
-    private UserDTO poster;
     private int numberOfParticipants;
     private int numberOfComments;
     private Date timeStamp;

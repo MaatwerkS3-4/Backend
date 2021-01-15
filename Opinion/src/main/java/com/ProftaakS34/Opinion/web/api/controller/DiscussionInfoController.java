@@ -3,6 +3,7 @@ package com.ProftaakS34.Opinion.web.api.controller;
 import com.ProftaakS34.Opinion.authentication.AuthenticationService;
 import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
+import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
 import com.ProftaakS34.Opinion.domain.service.CommentService;
@@ -124,7 +125,6 @@ public class DiscussionInfoController {
     }
 
     private DiscussionInfoDTO toDTO(Discussion model, String jwt){
-
         int parCount = commentService.getNumberOfParticipantsByDiscussion(model);
         int comCount = model.getComments().size();
         int upvoteCount = model.getUpvoters().size();
@@ -140,7 +140,6 @@ public class DiscussionInfoController {
         return new DiscussionInfoDTO(
                 model.getId(),
                 model.getSubject(),
-                userMapper.toDTO(model.getPoster()),
                 parCount,
                 comCount,
                 model.getTimeStamp(),
