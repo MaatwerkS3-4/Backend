@@ -129,7 +129,8 @@ public class DiscussionInfoController {
         int comCount = model.getComments().size();
         int upvoteCount = model.getUpvoters().size();
         boolean userUpvoted = false;
-        if (jwt!=null && authenticationService.userLoggedIn(jwt)) {
+
+        if (jwt!=null && !jwt.equals("null") && authenticationService.userLoggedIn(jwt)) {
             long id = Long.parseLong(authenticationService.getId(jwt));
             for (User upvoter : model.getUpvoters()) {
                 if (upvoter.getId() == id) userUpvoted = true;
