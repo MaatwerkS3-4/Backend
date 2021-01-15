@@ -6,6 +6,7 @@ import com.ProftaakS34.Opinion.data.repository.CommentRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class MockCommentRepo implements CommentRepository {
     List<CommentDAO> commentDAOS;
@@ -67,5 +68,10 @@ public class MockCommentRepo implements CommentRepository {
     }
     public MockCommentRepo() {
         commentDAOS = new ArrayList<>();
+    }
+
+    @Override
+    public List<CommentDAO> findCommentDAOSByPosterId(long id) {
+        return commentDAOS.stream().filter(c -> c.getPoster().getId() == id).collect(Collectors.toList());
     }
 }
