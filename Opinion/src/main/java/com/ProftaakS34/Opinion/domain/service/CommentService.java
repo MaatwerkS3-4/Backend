@@ -35,6 +35,15 @@ public class CommentService {
         this.discussionRepository = discussionRepository;
     }
 
+    public List<Comment> findCommentsByUserId(long id){
+        List<Comment> comments = new ArrayList<>();
+        for(CommentDAO c : commentRepository.findCommentDAOSByPosterId(id)){
+            comments.add(commentMapper.toModel(c));
+        }
+
+        return comments;
+    }
+
     public Comment saveComment(long discussionId, long posterId, String content) {
         //Check content and get poster
         User poster = checkCommentContent(posterId, content);
@@ -55,7 +64,7 @@ public class CommentService {
         return commentMapper.toModel(comment);
     }
 
-    public Comment saveReply(long posterId, long commentId, String content){
+    public Comment saveReply(long discussionId, long posterId, long commentId, String content){
         //Check content and get poster
         User poster = checkCommentContent(posterId, content);
 
