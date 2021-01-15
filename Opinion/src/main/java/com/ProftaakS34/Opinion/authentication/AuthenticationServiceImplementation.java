@@ -17,7 +17,7 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     }
     @Override
     public String getTokenSubject(String jwt){
-        if(jwt == null || jwt.isEmpty()) return null;
+        if(jwt.equals("null") ||  jwt == null || jwt.isEmpty()) return null;
 
         return JWT.require(Algorithm.HMAC512(AuthenticationConstants.SECRET.getBytes()))
                 .build()
@@ -32,6 +32,7 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
 
     @Override
     public boolean userLoggedIn(String jwt) {
+        if(jwt.equals("null") ||  jwt == null || jwt.isEmpty()) return false;
         return (getTokenSubject(jwt).substring(0,8).equals("loggedIn"));
     }
 
