@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 public class DiscussionMapperTests {
@@ -25,6 +26,7 @@ public class DiscussionMapperTests {
     public DiscussionDAO discDAO;
     public DiscussionDTO discDTO;
     public Discussion discussion;
+    private User user;
 
     private DiscussionMapperTests() {
         discDAO = new DiscussionDAO();
@@ -52,7 +54,7 @@ public class DiscussionMapperTests {
         discussion.setId(1);
         discussion.setSubject("Subject");
         discussion.setDescription("Description");
-            User user = new User();
+            user = new User();
             user.setId(1);
             user.setUsername("A");
             user.setPassword("A");
@@ -96,6 +98,38 @@ public class DiscussionMapperTests {
         Assertions.assertEquals(discDTO.getId(), newDTO.getId());
         Assertions.assertEquals(discDTO.getSubject(), newDTO.getSubject());
         Assertions.assertEquals(discDTO.getDescription(), newDTO.getDescription());
+    }
+
+    @Test
+    public void toDTOWithUidFromOtherUser() {
+        List<Comment> commentList = new ArrayList<>();
+
+        User otherUser = new User();
+        user.setId(3);
+        user.setUsername("B");
+        user.setPassword("B");
+
+        Comment otherUserComment = new Comment();
+        otherUserComment.setId(1);
+        otherUserComment.setPoster(user);
+        otherUserComment.setContent("Content");
+        otherUserComment.setReplies(new ArrayList<>());
+
+        List<User> upVoters = new ArrayList<>();
+        upVoters.add(otherUser);
+        otherUserComment.setUpvoters(upVoters);
+
+        commentList.add(otherUserComment);
+        discussion.setComments(commentList);
+
+
+
+        DiscussionDTO newDTO = mapper.toDTO(discussion, 1);
+
+        Assertions.assertEquals(discDTO.getId(), newDTO.getId());
+        Assertions.assertEquals(discDTO.getSubject(), newDTO.getSubject());
+        Assertions.assertEquals(discDTO.getDescription(), newDTO.getDescription());
+        Assertions.assertEquals(false, newDTO.getComments().get(0).isUpvotedByUser());
     }
 
 }

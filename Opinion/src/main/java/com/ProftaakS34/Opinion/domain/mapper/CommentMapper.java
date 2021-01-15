@@ -71,7 +71,6 @@ public class CommentMapper {
     }
 
     public CommentDTO toDTO(Comment model){
-        UserDTO poster = userMapper.toDTO(model.getPoster());
         CommentDTO dto = new CommentDTO();
         dto.setContent(model.getContent());
         dto.setId(model.getId());

@@ -85,23 +85,15 @@ public class DiscussionMapper {
     }
 
     public DiscussionDTO toDTO(Discussion model){
-        UserDTO poster = userMapper.toDTO(model.getPoster());
         List<CommentDTO> comments = new ArrayList<>();
         for(Comment c : model.getComments()){
             comments.add(commentMapper.toDTO(c));
         }
 
-        DiscussionDTO dto = new DiscussionDTO();
-        dto.setComments(comments);
-        dto.setDescription(model.getDescription());
-        dto.setId(model.getId());
-        dto.setSubject(model.getSubject());
-        dto.setTags(model.getTags());
-        return dto;
+        return getDiscussionDTO(model, comments);
     }
 
     public DiscussionDTO toDTO(Discussion model, long uid) {
-        UserDTO poster = userMapper.toDTO(model.getPoster());
         List<CommentDTO> comments = new ArrayList<>();
         for(Comment c : model.getComments()){
             CommentDTO comment = commentMapper.toDTO(c);
@@ -111,6 +103,10 @@ public class DiscussionMapper {
             comments.add(comment);
         }
         Collections.shuffle(comments);
+        return getDiscussionDTO(model, comments);
+    }
+
+    private DiscussionDTO getDiscussionDTO(Discussion model, List<CommentDTO> comments) {
         DiscussionDTO dto = new DiscussionDTO();
         dto.setComments(comments);
         dto.setDescription(model.getDescription());
