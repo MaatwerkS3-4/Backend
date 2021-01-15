@@ -64,7 +64,7 @@ public class CommentService {
         return commentMapper.toModel(comment);
     }
 
-    public Comment saveReply(long discussionId, long posterId, long commentId, String content){
+    public Comment saveReply(long posterId, long commentId, String content){
         //Check content and get poster
         User poster = checkCommentContent(posterId, content);
 
