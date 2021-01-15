@@ -69,7 +69,6 @@ public class OpinionApplication {
 			Comment reply = commentService.saveReply(discussion.getId(), user.getId(), comment2.getId(), "Maecenas urna erat, viverra ac gravida sit amet, porta nec ex. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis ut semper sapien. Proin mollis justo neque, nec volutpat leo pharetra vel. Curabitur leo felis, commodo nec nisi ac, laoreet bibendum ligula. Nulla ornare posuere orci. ");
 			Comment reply2 = commentService.saveReply(discussion2.getId(), user3.getId(), comment3.getId(), "Curabitur ut tempus erat, vel dapibus enim. Quisque commodo. ");
 			Comment reply3 = commentService.saveReply(discussion.getId(), user2.getId(), reply.getId(), "Quisque accumsan sit amet justo nec dignissim. Sed quis dui at arcu eleifend porta. Morbi ut sodales velit. Nulla mollis commodo auctor. Nullam.");
-
 		};
 	}
 
