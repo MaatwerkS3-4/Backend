@@ -18,13 +18,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
-public class DiscussionMapperTests {
-    public DiscussionMapper mapper;
-    public DiscussionDAO discDAO;
-    public DiscussionDTO discDTO;
-    public Discussion discussion;
+class DiscussionMapperTests {
+    private DiscussionMapper mapper;
+    private DiscussionDAO discDAO;
+    private DiscussionDTO discDTO;
+    private Discussion discussion;
+    private User user;
 
     private DiscussionMapperTests() {
         discDAO = new DiscussionDAO();
@@ -52,7 +54,7 @@ public class DiscussionMapperTests {
         discussion.setId(1);
         discussion.setSubject("Subject");
         discussion.setDescription("Description");
-            User user = new User();
+            user = new User();
             user.setId(1);
             user.setUsername("A");
             user.setPassword("A");
@@ -64,7 +66,7 @@ public class DiscussionMapperTests {
 
 
     @BeforeEach
-    public void SetUp() {
+    void SetUp() {
         UserMapper userMapper = new UserMapper();
         CommentMapper commentMapper = new CommentMapper(userMapper);
 
@@ -72,7 +74,7 @@ public class DiscussionMapperTests {
     }
 
     @Test
-    public void ToDAOTest() {
+    void ToDAOTest() {
         DiscussionDAO newDAO = mapper.toDAO(discussion);
 
         Assertions.assertEquals(discDAO.getId(), newDAO.getId());
@@ -81,7 +83,7 @@ public class DiscussionMapperTests {
     }
 
     @Test
-    public void toModelTest() {
+    void toModelTest() {
         Discussion newDisc = mapper.toModel(discDAO);
 
         Assertions.assertEquals(discussion.getId(), newDisc.getId());
@@ -90,12 +92,44 @@ public class DiscussionMapperTests {
     }
 
     @Test
-    public void toDTOTest() {
+    void toDTOTest() {
         DiscussionDTO newDTO = mapper.toDTO(discussion);
 
         Assertions.assertEquals(discDTO.getId(), newDTO.getId());
         Assertions.assertEquals(discDTO.getSubject(), newDTO.getSubject());
         Assertions.assertEquals(discDTO.getDescription(), newDTO.getDescription());
+    }
+
+    @Test
+    void toDTOWithUidFromOtherUser() {
+        List<Comment> commentList = new ArrayList<>();
+
+        User otherUser = new User();
+        user.setId(3);
+        user.setUsername("B");
+        user.setPassword("B");
+
+        Comment otherUserComment = new Comment();
+        otherUserComment.setId(1);
+        otherUserComment.setPoster(user);
+        otherUserComment.setContent("Content");
+        otherUserComment.setReplies(new ArrayList<>());
+
+        List<User> upVoters = new ArrayList<>();
+        upVoters.add(otherUser);
+        otherUserComment.setUpvoters(upVoters);
+
+        commentList.add(otherUserComment);
+        discussion.setComments(commentList);
+
+
+
+        DiscussionDTO newDTO = mapper.toDTO(discussion, 1);
+
+        Assertions.assertEquals(discDTO.getId(), newDTO.getId());
+        Assertions.assertEquals(discDTO.getSubject(), newDTO.getSubject());
+        Assertions.assertEquals(discDTO.getDescription(), newDTO.getDescription());
+        Assertions.assertFalse(newDTO.getComments().get(0).isUpvotedByUser());
     }
 
 }

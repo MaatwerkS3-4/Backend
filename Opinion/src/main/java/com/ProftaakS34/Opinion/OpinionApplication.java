@@ -14,10 +14,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 @SpringBootApplication
 public class OpinionApplication {
@@ -28,20 +28,21 @@ public class OpinionApplication {
 
 	@Bean
 	CommandLineRunner runner(DiscussionService discussionService, UserService userService, CommentService commentService){
-		return args -> {User user = userService.saveUser("test user 1", "Yes");
+		return args -> {
+			User user = userService.saveUser("test user 1", "Yes");
 			User user2 = userService.saveUser("test user 2", "Yes2");
 			User user3 = userService.saveUser("test user 3", "Yes3");
 
 			List<Category> tags1 = new ArrayList<>( Arrays.asList(
-					Category.Business, Category.Education
+					Category.BUSINESS, Category.EDUCATION
 			));
 
 			List<Category> tags2 = new ArrayList<>( Arrays.asList(
-					Category.Philosophy
+					Category.PHILOSOPHY
 			));
 
 			List<Category> tags3 = new ArrayList<>(Arrays.asList(
-					Category.Psychology, Category.Health, Category.Sport
+					Category.PSYCHOLOGY, Category.HEALTH, Category.SPORT
 			));
 
 			Discussion discussion = discussionService.postDiscussion(user.getId(), "Etiam luctus scelerisque purus, non venenatis urna. Nam efficitur ante et justo pharetra.... ",
@@ -65,9 +66,9 @@ public class OpinionApplication {
 			Comment comment4 = commentService.saveComment(discussion2.getId(), user.getId(), "Quisque lacinia libero sit amet augue egestas accumsan. Donec eget viverra ligula. Maecenas convallis dictum interdum. Sed accumsan accumsan blandit. Aliquam at dolor facilisis, commodo metus vitae, pulvinar orci. Aenean et eros at odio laoreet scelerisque eget ac justo. Nulla lacus.");
 			Comment comment5 = commentService.saveComment(discussion2.getId(), user2.getId(), "Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. ");
 
-			Comment reply = commentService.saveReply(discussion.getId(), user.getId(), comment2.getId(), "Maecenas urna erat, viverra ac gravida sit amet, porta nec ex. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis ut semper sapien. Proin mollis justo neque, nec volutpat leo pharetra vel. Curabitur leo felis, commodo nec nisi ac, laoreet bibendum ligula. Nulla ornare posuere orci. ");
-			Comment reply2 = commentService.saveReply(discussion2.getId(), user3.getId(), comment3.getId(), "Curabitur ut tempus erat, vel dapibus enim. Quisque commodo. ");
-			Comment reply3 = commentService.saveReply(discussion.getId(), user2.getId(), reply.getId(), "Quisque accumsan sit amet justo nec dignissim. Sed quis dui at arcu eleifend porta. Morbi ut sodales velit. Nulla mollis commodo auctor. Nullam.");
+			Comment reply = commentService.saveReply(user.getId(), comment2.getId(), "Maecenas urna erat, viverra ac gravida sit amet, porta nec ex. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis ut semper sapien. Proin mollis justo neque, nec volutpat leo pharetra vel. Curabitur leo felis, commodo nec nisi ac, laoreet bibendum ligula. Nulla ornare posuere orci. ");
+			Comment reply2 = commentService.saveReply(user3.getId(), comment3.getId(), "Curabitur ut tempus erat, vel dapibus enim. Quisque commodo. ");
+			Comment reply3 = commentService.saveReply(user2.getId(), reply.getId(), "Quisque accumsan sit amet justo nec dignissim. Sed quis dui at arcu eleifend porta. Morbi ut sodales velit. Nulla mollis commodo auctor. Nullam.");
 
 		};
 	}

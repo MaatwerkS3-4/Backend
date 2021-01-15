@@ -3,13 +3,11 @@ package com.ProftaakS34.Opinion.domain.mapper;
 import com.ProftaakS34.Opinion.data.dao.CommentDAO;
 import com.ProftaakS34.Opinion.data.dao.DiscussionDAO;
 import com.ProftaakS34.Opinion.data.dao.UserDAO;
-import com.ProftaakS34.Opinion.domain.model.Category;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
 import com.ProftaakS34.Opinion.web.api.dto.CommentDTO;
 import com.ProftaakS34.Opinion.web.api.dto.DiscussionDTO;
-import com.ProftaakS34.Opinion.web.api.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,23 +83,15 @@ public class DiscussionMapper {
     }
 
     public DiscussionDTO toDTO(Discussion model){
-        UserDTO poster = userMapper.toDTO(model.getPoster());
         List<CommentDTO> comments = new ArrayList<>();
         for(Comment c : model.getComments()){
             comments.add(commentMapper.toDTO(c));
         }
 
-        DiscussionDTO dto = new DiscussionDTO();
-        dto.setComments(comments);
-        dto.setDescription(model.getDescription());
-        dto.setId(model.getId());
-        dto.setSubject(model.getSubject());
-        dto.setTags(model.getTags());
-        return dto;
+        return getDiscussionDTO(model, comments);
     }
 
     public DiscussionDTO toDTO(Discussion model, long uid) {
-        UserDTO poster = userMapper.toDTO(model.getPoster());
         List<CommentDTO> comments = new ArrayList<>();
         for(Comment c : model.getComments()){
             CommentDTO comment = commentMapper.toDTO(c);
@@ -111,6 +101,10 @@ public class DiscussionMapper {
             comments.add(comment);
         }
         Collections.shuffle(comments);
+        return getDiscussionDTO(model, comments);
+    }
+
+    private DiscussionDTO getDiscussionDTO(Discussion model, List<CommentDTO> comments) {
         DiscussionDTO dto = new DiscussionDTO();
         dto.setComments(comments);
         dto.setDescription(model.getDescription());

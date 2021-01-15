@@ -5,13 +5,12 @@ import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
 import com.ProftaakS34.Opinion.domain.model.User;
 import com.ProftaakS34.Opinion.web.api.dto.UserDTO;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class UserMapperTests {
+class UserMapperTests {
     private User user;
     private UserDAO userDAO;
     private UserDTO userDTO;
@@ -34,13 +33,13 @@ public class UserMapperTests {
     }
 
     @BeforeEach
-    public void SetUp() {
+    void SetUp() {
         mapper = new UserMapper();
     }
 
 
     @Test
-    public void ToDAOTest() {
+    void ToDAOTest() {
         UserDAO newDAO = mapper.toDAO(user);
 
         Assertions.assertEquals(userDAO.getId(), newDAO.getId());
@@ -50,7 +49,7 @@ public class UserMapperTests {
     }
 
     @Test
-    public void toModelTest() {
+    void toModelTest() {
         User newUser = mapper.toModel(userDAO);
 
         Assertions.assertEquals(user.getId(), newUser.getId());
@@ -59,7 +58,7 @@ public class UserMapperTests {
     }
 
     @Test
-    public void toDTOTest() {
+    void toDTOTest() {
         UserDTO newDTO = mapper.toDTO(user);
 
         Assertions.assertEquals(userDTO.getId(), newDTO.getId());

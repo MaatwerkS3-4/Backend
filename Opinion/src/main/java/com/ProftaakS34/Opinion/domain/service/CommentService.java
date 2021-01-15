@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,15 +33,6 @@ public class CommentService {
         this.userMapper = userMapper;
         this.commentMapper = commentMapper;
         this.discussionRepository = discussionRepository;
-    }
-
-    public Comment findCommentById(Long id) {
-        if (commentRepository.findById(id).isPresent()) {
-            return commentMapper.toModel(commentRepository.findById(id).get());
-        }
-        else{
-            return null;
-        }
     }
 
     public List<Comment> findCommentsByUserId(long id){
@@ -74,7 +64,7 @@ public class CommentService {
         return commentMapper.toModel(comment);
     }
 
-    public Comment saveReply(long discussionId, long posterId, long commentId, String content){
+    public Comment saveReply(long posterId, long commentId, String content){
         //Check content and get poster
         User poster = checkCommentContent(posterId, content);
 

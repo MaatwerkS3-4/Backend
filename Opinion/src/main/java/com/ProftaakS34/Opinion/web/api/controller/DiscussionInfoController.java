@@ -1,7 +1,6 @@
 package com.ProftaakS34.Opinion.web.api.controller;
 
 import com.ProftaakS34.Opinion.authentication.AuthenticationService;
-import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +29,18 @@ import java.util.List;
 @Api(tags = "DiscussionInfo")
 public class DiscussionInfoController {
 
+    private final String authString;
     private final DiscussionService discussionService;
     private final CommentService commentService;
     private final UserMapper userMapper;
-    private final DiscussionMapper discussionMapper;
     private final AuthenticationService authenticationService;
 
     @Autowired
-    public DiscussionInfoController(DiscussionService discussionService, CommentService commentService, UserMapper userMapper, DiscussionMapper discussionMapper, AuthenticationService authenticationService) {
+    public DiscussionInfoController(DiscussionService discussionService, CommentService commentService, UserMapper userMapper, AuthenticationService authenticationService) {
+        authString = "Authorization";
         this.discussionService = discussionService;
         this.commentService = commentService;
         this.userMapper = userMapper;
-        this.discussionMapper = discussionMapper;
         this.authenticationService = authenticationService;
     }
 
@@ -58,8 +56,8 @@ public class DiscussionInfoController {
             @ApiResponse(code = 200, message = "Ok - the list info about existing discussions has been returned")
     })
     @GetMapping
-    private ResponseEntity<List<DiscussionInfoDTO>> getAllDiscussionInfos(HttpServletRequest request){
-        String jwt = request.getHeader("Authorization");
+    public ResponseEntity<List<DiscussionInfoDTO>> getAllDiscussionInfos(HttpServletRequest request){
+        String jwt = request.getHeader(authString);
         List<DiscussionInfoDTO> resource = new ArrayList<>();
         for(Discussion p : discussionService.findAllDiscussions()){
             resource.add(toDTO(p,jwt));
@@ -83,7 +81,7 @@ public class DiscussionInfoController {
     @GetMapping("/id/{discussionId}")
     public ResponseEntity<DiscussionInfoDTO> getDiscussionInfoById(@PathVariable long discussionId, HttpServletRequest request){
         Discussion discussion = discussionService.findDiscussionById(discussionId);
-        String jwt = request.getHeader("Authorization");
+        String jwt = request.getHeader(authString);
         DiscussionInfoDTO resource = toDTO(discussion, jwt);
         return ResponseEntity.ok(resource);
     }
@@ -103,7 +101,7 @@ public class DiscussionInfoController {
     @GetMapping("/subject/{subject}")
     public ResponseEntity<DiscussionInfoDTO> getDiscussionInfoById(@PathVariable String subject, HttpServletRequest request){
         Discussion discussion = discussionService.findDiscussionBySubject(subject);
-        String jwt = request.getHeader("Authorization");
+        String jwt = request.getHeader(authString);
         DiscussionInfoDTO resource = toDTO(discussion, jwt);
         return ResponseEntity.ok(resource);
     }
@@ -111,7 +109,7 @@ public class DiscussionInfoController {
     @GetMapping("/user/")
     public ResponseEntity<List<DiscussionInfoDTO>> getDiscussionInfosByPoster(HttpServletRequest request) {
         try {
-            String jwt = request.getHeader("Authorization");
+            String jwt = request.getHeader(authString);
             long userId = Long.parseLong(authenticationService.getId(jwt));
             List<Discussion> discussions = discussionService.findDiscussionsByPoster(userId);
             List<DiscussionInfoDTO> discussionInfos = new ArrayList<>();

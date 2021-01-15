@@ -3,7 +3,6 @@ package com.ProftaakS34.Opinion.web.api.dto;
 import com.ProftaakS34.Opinion.domain.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;

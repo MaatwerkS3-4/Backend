@@ -9,19 +9,11 @@ import springfox.documentation.annotations.ApiIgnore;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.SecurityReference;
 import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.Collections;
-
-import static io.swagger.models.auth.In.HEADER;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Configuration
 @EnableSwagger2
@@ -29,9 +21,9 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @ApiIgnore
 public class SwaggerConfig {
 
-    private final static String API_TITLE = "API for Viewpoint";
-    private final static String API_DESCRIPTION = "The API description for all of Viewpoint's endpoints";
-    private final static String API_VERSION = "0.1.0";
+    private static final String API_TITLE = "API for Viewpoint";
+    private static final String API_DESCRIPTION = "The API description for all of Viewpoint's endpoints";
+    private static final String API_VERSION = "0.1.0";
 
     @GetMapping("/api")
     public String swagger(){

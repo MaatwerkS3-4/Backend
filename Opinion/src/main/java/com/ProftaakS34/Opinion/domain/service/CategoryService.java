@@ -20,19 +20,19 @@ public class CategoryService {
     public Map<Category, Category> getReverseRecommendations(){
         Map<Category, Category> reverse = new HashMap<>();
 
-        reverse.put(Category.Business, Category.Sport);
-        reverse.put(Category.Education, Category.Politics);
-        reverse.put(Category.Entertainment, Category.Business);
-        reverse.put(Category.Food, Category.Literature);
-        reverse.put(Category.Health, Category.History);
-        reverse.put(Category.History, Category.Entertainment);
-        reverse.put(Category.Literature, Category.Health);
-        reverse.put(Category.Philosophy, Category.Technology);
-        reverse.put(Category.Psychology, Category.Science);
-        reverse.put(Category.Science, Category.Psychology);
-        reverse.put(Category.Technology, Category.Philosophy);
-        reverse.put(Category.Sport, Category.Education);
-        reverse.put(Category.Politics, Category.Philosophy);
+        reverse.put(Category.BUSINESS, Category.SPORT);
+        reverse.put(Category.EDUCATION, Category.POLITICS);
+        reverse.put(Category.ENTERTAINMENT, Category.BUSINESS);
+        reverse.put(Category.FOOD, Category.LITERATURE);
+        reverse.put(Category.HEALTH, Category.HISTORY);
+        reverse.put(Category.HISTORY, Category.ENTERTAINMENT);
+        reverse.put(Category.LITERATURE, Category.HEALTH);
+        reverse.put(Category.PHILOSOPHY, Category.TECHNOLOGY);
+        reverse.put(Category.PSYCHOLOGY, Category.SCIENCE);
+        reverse.put(Category.SCIENCE, Category.PSYCHOLOGY);
+        reverse.put(Category.TECHNOLOGY, Category.PHILOSOPHY);
+        reverse.put(Category.SPORT, Category.EDUCATION);
+        reverse.put(Category.POLITICS, Category.PHILOSOPHY);
 
         return reverse;
     }

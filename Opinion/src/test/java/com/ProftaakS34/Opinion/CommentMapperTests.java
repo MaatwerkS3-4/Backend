@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @SpringBootTest
-public class CommentMapperTests {
-    public CommentMapper mapper;
-    public CommentDAO comDAO;
-    public CommentDTO comDTO;
-    public Comment comment;
+class CommentMapperTests {
+    private CommentMapper mapper;
+    private CommentDAO comDAO;
+    private CommentDTO comDTO;
+    private Comment comment;
 
     private CommentMapperTests() {
         comDAO = new CommentDAO();
@@ -55,14 +55,14 @@ public class CommentMapperTests {
 
 
     @BeforeEach
-    public void SetUp() {
+    void SetUp() {
         UserMapper userMapper = new UserMapper();
         mapper = new CommentMapper(userMapper);
     }
 
 
     @Test
-    public void ToDAOTest() {
+    void ToDAOTest() {
         CommentDAO newDAO = mapper.toDAO(comment);
 
         Assertions.assertEquals(comDAO.getId(), newDAO.getId());
@@ -71,7 +71,7 @@ public class CommentMapperTests {
     }
 
     @Test
-    public void toModelTest() {
+    void toModelTest() {
         Comment newComment = mapper.toModel(comDAO);
 
         Assertions.assertEquals(comment.getId(), newComment.getId());
@@ -80,7 +80,7 @@ public class CommentMapperTests {
     }
 
     @Test
-    public void toDTOTest() {
+    void toDTOTest() {
         CommentDTO newDTO = mapper.toDTO(comment);
 
         Assertions.assertEquals(comDTO.getId(), newDTO.getId());

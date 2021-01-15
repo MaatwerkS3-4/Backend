@@ -20,35 +20,32 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @SpringBootTest
-public class DiscussionDAOTests {
-    public DiscussionService discussionRepo;
-    public UserService userRepo;
-    public UserMapper userMapper;
-    public CommentMapper commentMapper;
+class DiscussionDAOTests {
+    private DiscussionService discussionRepo;
 
-    public UserDAO correctUserDAO;
-    public List<Category> discussionTags;
+    private UserDAO correctUserDAO;
+    private List<Category> discussionTags;
 
 
     @BeforeEach
-    public void setUp() throws Exception {
-        userMapper = new UserMapper();
-        commentMapper = new CommentMapper(userMapper);
+    void setUp() throws Exception {
+        UserMapper userMapper = new UserMapper();
+        CommentMapper commentMapper = new CommentMapper(userMapper);
 
-        userRepo = new UserService(new MockUserRepo(), userMapper, new MockPasswordService());
+        UserService userRepo = new UserService(new MockUserRepo(), userMapper, new MockPasswordService());
 
         correctUserDAO = new UserDAO("username", "password");
         correctUserDAO.setId(0);
         userRepo.saveUser(correctUserDAO.getUsername(), correctUserDAO.getEncryptedPassword());
 
-        discussionRepo = new DiscussionService(new MockDiscussionRepo(), userRepo, null, new DiscussionMapper(userMapper, commentMapper), userMapper, commentMapper);
+        discussionRepo = new DiscussionService(new MockDiscussionRepo(), userRepo, new DiscussionMapper(userMapper, commentMapper), userMapper);
         discussionTags = new ArrayList<>();
-        discussionTags.add(Category.Health);
+        discussionTags.add(Category.HEALTH);
     }
 
 
     @Test
-    public void checksIfPostSubjectExists(){
+    void checksIfPostSubjectExists(){
         DiscussionDAO discussionDAOMissingSubject = DAOSetter(correctUserDAO, "", "desc", discussionTags);
 
 
@@ -61,7 +58,7 @@ public class DiscussionDAOTests {
     }
 
     @Test
-    public void checksIfUserExists(){
+    void checksIfUserExists(){
 
         DiscussionDAO discussionDAOMissingUser = DAOSetter(null, "politics", "desc", discussionTags);
 
@@ -74,7 +71,7 @@ public class DiscussionDAOTests {
     }
 
     @Test
-    public void checksIfUserIsInDatabase() {
+    void checksIfUserIsInDatabase() {
         UserDAO fakeUser = new UserDAO("username", "password");
         fakeUser.setId(5);
 
@@ -89,7 +86,7 @@ public class DiscussionDAOTests {
     }
 
     @Test
-    public void canCreatePost() {
+    void canCreatePost() {
         DiscussionDAO correctDiscussionDAO = DAOSetter(correctUserDAO, "politics", "desc", discussionTags);
 
         discussionRepo.postDiscussion(correctDiscussionDAO.getPoster().getId(),
