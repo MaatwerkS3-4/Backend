@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CommentServiceTests {
+class CommentServiceTests {
     private CommentService commentService;
 
 
@@ -32,7 +32,6 @@ public class CommentServiceTests {
         MockCommentRepo mockCommentRepo = new MockCommentRepo();
         CommentMapper commentMapper = new CommentMapper(userMapper);
         MockDiscussionRepo mockDiscussionRepo = new MockDiscussionRepo();
-        DiscussionMapper discussionMapper = new DiscussionMapper(userMapper, commentMapper);
 
         UserService userService = new UserService(mockUserRepo, userMapper, passwordService);
         commentService = new CommentService(mockCommentRepo, userService, userMapper, commentMapper, mockDiscussionRepo);

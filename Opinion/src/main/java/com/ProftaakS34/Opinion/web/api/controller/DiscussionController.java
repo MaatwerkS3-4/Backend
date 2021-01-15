@@ -2,13 +2,8 @@ package com.ProftaakS34.Opinion.web.api.controller;
 
 import com.ProftaakS34.Opinion.authentication.AuthenticationService;
 import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
-import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
-import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
-import com.ProftaakS34.Opinion.domain.model.User;
-import com.ProftaakS34.Opinion.domain.service.CommentService;
 import com.ProftaakS34.Opinion.domain.service.DiscussionService;
-import com.ProftaakS34.Opinion.web.api.dto.CommentDTO;
 import com.ProftaakS34.Opinion.web.api.dto.CreateDiscussionDTO;
 import com.ProftaakS34.Opinion.web.api.dto.DiscussionDTO;
 import io.swagger.annotations.Api;
@@ -28,18 +23,16 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = "Discussions")
 public class DiscussionController {
 
+    private final String authString;
     private final DiscussionService discussionService;
     private final DiscussionMapper discussionMapper;
-    private final CommentService commentService;
-    private final UserMapper userMapper;
     private final AuthenticationService authenticationService;
 
     @Autowired
-    public DiscussionController(DiscussionService discussionService, DiscussionMapper discussionMapper, CommentService commentService, UserMapper userMapper, AuthenticationService authenticationService) {
+    public DiscussionController(DiscussionService discussionService, DiscussionMapper discussionMapper, AuthenticationService authenticationService) {
+        authString = "Authorization";
         this.discussionService = discussionService;
         this.discussionMapper = discussionMapper;
-        this.commentService = commentService;
-        this.userMapper = userMapper;
         this.authenticationService = authenticationService;
     }
 
@@ -58,10 +51,10 @@ public class DiscussionController {
             //todo: implement exceptions
     })
     @GetMapping("/{discussionId}")
-    private ResponseEntity<DiscussionDTO> getDiscussionById(@PathVariable long discussionId, HttpServletRequest request){
+    public ResponseEntity<DiscussionDTO> getDiscussionById(@PathVariable long discussionId, HttpServletRequest request){
         Discussion discussion = discussionService.findDiscussionById(discussionId);
         DiscussionDTO resource;
-        String jwt = request.getHeader("Authorization");
+        String jwt = request.getHeader(authString);
         if (authenticationService.userLoggedIn(jwt)) {
             long id = Long.parseLong(authenticationService.getId(jwt));
             resource = discussionMapper.toDTO(discussion, id);
@@ -85,8 +78,8 @@ public class DiscussionController {
             @ApiResponse(code = 201, message = "Created - discussion has been created")
     })
     @PostMapping
-    private ResponseEntity<DiscussionDTO> saveDiscussion(@RequestBody CreateDiscussionDTO dto, HttpServletRequest request){
-        String jwt = request.getHeader("Authorization");
+    public ResponseEntity<DiscussionDTO> saveDiscussion(@RequestBody CreateDiscussionDTO dto, HttpServletRequest request){
+        String jwt = request.getHeader(authString);
         if (!authenticationService.userLoggedIn(jwt)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         Discussion discussion = discussionService.postDiscussion(dto.getUserId(), dto.getSubject(), dto.getDescription(), dto.getTags());
         DiscussionDTO resource = discussionMapper.toDTO(discussion);
@@ -106,8 +99,8 @@ public class DiscussionController {
             @ApiResponse(code=201, message = "Upvoted - discussion has been upvoted")
     })
     @PostMapping("/{discussionId}/upvote")
-    private ResponseEntity upvoteDiscussion(@PathVariable long discussionId, HttpServletRequest request) throws NotFoundException {
-        String jwt = request.getHeader("Authorization");
+    public ResponseEntity upvoteDiscussion(@PathVariable long discussionId, HttpServletRequest request) throws NotFoundException {
+        String jwt = request.getHeader(authString);
         if (!authenticationService.userLoggedIn(jwt)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         long userId = Long.parseLong(authenticationService.getId(jwt));
         discussionService.upvoteDiscussion(discussionId, userId);

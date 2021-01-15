@@ -3,11 +3,9 @@ package com.ProftaakS34.Opinion.domain.service;
 import com.ProftaakS34.Opinion.data.dao.DiscussionDAO;
 import com.ProftaakS34.Opinion.data.dao.UserDAO;
 import com.ProftaakS34.Opinion.data.repository.DiscussionRepository;
-import com.ProftaakS34.Opinion.domain.mapper.CommentMapper;
 import com.ProftaakS34.Opinion.domain.mapper.DiscussionMapper;
 import com.ProftaakS34.Opinion.domain.mapper.UserMapper;
 import com.ProftaakS34.Opinion.domain.model.Category;
-import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
 import javassist.NotFoundException;
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class DiscussionService {
@@ -23,20 +20,16 @@ public class DiscussionService {
     private final DiscussionRepository discussionRepository;
 
     private final UserService userService;
-    private final CommentService commentService;
 
     private final DiscussionMapper discussionMapper;
     private final UserMapper userMapper;
-    private final CommentMapper commentMapper;
 
     @Autowired
-    public DiscussionService(DiscussionRepository discussionRepository, UserService userService, CommentService commentService, DiscussionMapper discussionMapper, UserMapper userMapper, CommentMapper commentMapper) {
+    public DiscussionService(DiscussionRepository discussionRepository, UserService userService, DiscussionMapper discussionMapper, UserMapper userMapper) {
         this.discussionRepository = discussionRepository;
         this.userService = userService;
-        this.commentService = commentService;
         this.discussionMapper = discussionMapper;
         this.userMapper = userMapper;
-        this.commentMapper = commentMapper;
     }
 
     public Discussion findDiscussionById(Long id) {

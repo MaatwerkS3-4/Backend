@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-public class CategoryServiceTests {
+class CategoryServiceTests {
     private CategoryService categoryService;
 
     private CategoryServiceTests() {
@@ -20,8 +20,8 @@ public class CategoryServiceTests {
         List<String> pulledCats = categoryService.getAvailableCategories();
 
         Assertions.assertEquals(13, pulledCats.size());
-        Assertions.assertEquals("Technology", pulledCats.get(0));
-        Assertions.assertEquals("Food", pulledCats.get(6));
+        Assertions.assertEquals("TECHNOLOGY", pulledCats.get(0));
+        Assertions.assertEquals("FOOD", pulledCats.get(6));
     }
 
     @Test
@@ -29,7 +29,7 @@ public class CategoryServiceTests {
         Map<Category, Category> pulledReverses = categoryService.getReverseRecommendations();
 
         Assertions.assertEquals(13, pulledReverses.size());
-        Assertions.assertEquals(Category.Sport, pulledReverses.get(Category.Business));
-        Assertions.assertNotEquals(Category.Sport, pulledReverses.get(Category.Philosophy));
+        Assertions.assertEquals(Category.SPORT, pulledReverses.get(Category.BUSINESS));
+        Assertions.assertNotEquals(Category.SPORT, pulledReverses.get(Category.PHILOSOPHY));
     }
 }

@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
-public class DiscussionMapperTests {
+class DiscussionMapperTests {
     private DiscussionMapper mapper;
     private DiscussionDAO discDAO;
     private DiscussionDTO discDTO;
@@ -66,7 +66,7 @@ public class DiscussionMapperTests {
 
 
     @BeforeEach
-    public void SetUp() {
+    void SetUp() {
         UserMapper userMapper = new UserMapper();
         CommentMapper commentMapper = new CommentMapper(userMapper);
 
@@ -74,7 +74,7 @@ public class DiscussionMapperTests {
     }
 
     @Test
-    public void ToDAOTest() {
+    void ToDAOTest() {
         DiscussionDAO newDAO = mapper.toDAO(discussion);
 
         Assertions.assertEquals(discDAO.getId(), newDAO.getId());
@@ -83,7 +83,7 @@ public class DiscussionMapperTests {
     }
 
     @Test
-    public void toModelTest() {
+    void toModelTest() {
         Discussion newDisc = mapper.toModel(discDAO);
 
         Assertions.assertEquals(discussion.getId(), newDisc.getId());
@@ -92,7 +92,7 @@ public class DiscussionMapperTests {
     }
 
     @Test
-    public void toDTOTest() {
+    void toDTOTest() {
         DiscussionDTO newDTO = mapper.toDTO(discussion);
 
         Assertions.assertEquals(discDTO.getId(), newDTO.getId());
@@ -101,7 +101,7 @@ public class DiscussionMapperTests {
     }
 
     @Test
-    public void toDTOWithUidFromOtherUser() {
+    void toDTOWithUidFromOtherUser() {
         List<Comment> commentList = new ArrayList<>();
 
         User otherUser = new User();
@@ -129,7 +129,7 @@ public class DiscussionMapperTests {
         Assertions.assertEquals(discDTO.getId(), newDTO.getId());
         Assertions.assertEquals(discDTO.getSubject(), newDTO.getSubject());
         Assertions.assertEquals(discDTO.getDescription(), newDTO.getDescription());
-        Assertions.assertEquals(false, newDTO.getComments().get(0).isUpvotedByUser());
+        Assertions.assertFalse(newDTO.getComments().get(0).isUpvotedByUser());
     }
 
 }

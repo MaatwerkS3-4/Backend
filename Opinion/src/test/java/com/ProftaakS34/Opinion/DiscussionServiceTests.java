@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class DiscussionServiceTests {
+class DiscussionServiceTests {
     private DiscussionService discussionService;
     private UserDAO correctUserDAO;
     private List<Category> discussionTags;
@@ -44,10 +44,10 @@ public class DiscussionServiceTests {
         UserService userService = new UserService(mockUserRepo, userMapper, passwordService);
         CommentService commentService = new CommentService(mockCommentRepo, userService, userMapper, commentMapper, mockDiscussionRepo);
 
-        discussionService = new DiscussionService(mockDiscussionRepo, userService, commentService, discussionMapper, userMapper, commentMapper);
+        discussionService = new DiscussionService(mockDiscussionRepo, userService, discussionMapper, userMapper);
 
         discussionTags = new ArrayList<>();
-        discussionTags.add(Category.Health);
+        discussionTags.add(Category.HEALTH);
 
         correctUserDAO = new UserDAO("username", "password");
         correctUserDAO.setId(0);

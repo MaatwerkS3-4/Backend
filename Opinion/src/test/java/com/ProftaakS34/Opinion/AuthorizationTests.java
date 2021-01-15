@@ -4,7 +4,7 @@ import com.ProftaakS34.Opinion.authentication.AuthorizationServiceImplementation
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class AuthorizationTests {
+class AuthorizationTests {
     private AuthorizationServiceImplementation authService;
 
     private AuthorizationTests() {

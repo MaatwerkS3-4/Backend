@@ -11,17 +11,17 @@ import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class UserDAOTests {
-    public UserService userService;
+class UserDAOTests {
+    private UserService userService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.userService = new UserService(new MockUserRepo(), new UserMapper(), new MockPasswordService());
     }
 
 
     @Test
-    public void checksIfPasswordExists() {
+    void checksIfPasswordExists() {
         UserDAO userDAOIncorrectPassword = new UserDAO();
         userDAOIncorrectPassword.setUsername("Username");
 
@@ -31,7 +31,7 @@ public class UserDAOTests {
     }
 
     @Test
-    public void checksIfUsernameExists() {
+    void checksIfUsernameExists() {
         UserDAO userDAOIncorrectUsername = new UserDAO();
         userDAOIncorrectUsername.setEncryptedPassword("Password");
 
@@ -42,7 +42,7 @@ public class UserDAOTests {
     }
 
     @Test
-    public void canSaveUser() throws Exception {
+    void canSaveUser() throws Exception {
         UserDAO correctUserDAO = new UserDAO("username", "password");
         userService.saveUser(correctUserDAO.getUsername(), correctUserDAO.getEncryptedPassword());
 

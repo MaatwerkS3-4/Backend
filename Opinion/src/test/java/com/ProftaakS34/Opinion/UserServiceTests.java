@@ -12,25 +12,24 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserServiceTests {
-    public UserService userService;
-    public PasswordService passwordService;
+class UserServiceTests {
+    private UserService userService;
 
     @BeforeEach
-    public void setUp() {
-        this.passwordService = new PasswordService();
+    void setUp() {
+        PasswordService passwordService = new PasswordService();
         this.userService = new UserService(new MockUserRepo(), new UserMapper(), passwordService);
     }
 
     @Test
-    public void UsernameNotExists() {
+    void UsernameNotExists() {
         Assertions.assertThrows(NotFoundException.class, () -> {
             userService.logIn("FakeName", "FakePassword");
         });
     }
 
     @Test
-    public void CheckForWrongPassword() throws Exception {
+    void CheckForWrongPassword() throws Exception {
         UserDAO correctUserDAO = new UserDAO("username", "password");
         userService.saveUser(correctUserDAO.getUsername(), correctUserDAO.getEncryptedPassword());
 
@@ -41,7 +40,7 @@ public class UserServiceTests {
 
 
     @Test
-    public void canLogIn() throws Exception {
+    void canLogIn() throws Exception {
         UserDAO correctUserDAO = new UserDAO("username", "password");
         User correctUser = userService.saveUser(correctUserDAO.getUsername(), correctUserDAO.getEncryptedPassword());
 

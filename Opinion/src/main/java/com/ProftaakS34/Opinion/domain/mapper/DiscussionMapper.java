@@ -3,13 +3,11 @@ package com.ProftaakS34.Opinion.domain.mapper;
 import com.ProftaakS34.Opinion.data.dao.CommentDAO;
 import com.ProftaakS34.Opinion.data.dao.DiscussionDAO;
 import com.ProftaakS34.Opinion.data.dao.UserDAO;
-import com.ProftaakS34.Opinion.domain.model.Category;
 import com.ProftaakS34.Opinion.domain.model.Comment;
 import com.ProftaakS34.Opinion.domain.model.Discussion;
 import com.ProftaakS34.Opinion.domain.model.User;
 import com.ProftaakS34.Opinion.web.api.dto.CommentDTO;
 import com.ProftaakS34.Opinion.web.api.dto.DiscussionDTO;
-import com.ProftaakS34.Opinion.web.api.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

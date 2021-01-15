@@ -24,25 +24,21 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @SpringBootTest
-public class CommentDAOTests {
-    public CommentService commentRepo;
-    public UserService userRepo;
-    public UserMapper userMapper;
-    public CommentMapper commentMapper;
-    public DiscussionService discussionRepo;
-    public MockDiscussionRepo mockRepo;
+class CommentDAOTests {
+    private CommentService commentRepo;
+    private DiscussionService discussionRepo;
 
-    UserDAO correctUserDAO;
-    DiscussionDAO correctDiscDAO;
+    private UserDAO correctUserDAO;
+    private DiscussionDAO correctDiscDAO;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        userMapper = new UserMapper();
-        commentMapper = new CommentMapper(userMapper);
-        mockRepo = new MockDiscussionRepo();
+    void setUp() throws Exception {
+        UserMapper userMapper = new UserMapper();
+        CommentMapper commentMapper = new CommentMapper(userMapper);
+        MockDiscussionRepo mockRepo = new MockDiscussionRepo();
 
-        userRepo = new UserService(new MockUserRepo(), userMapper, new MockPasswordService());
-        discussionRepo = new DiscussionService(mockRepo, userRepo, null, new DiscussionMapper(userMapper, commentMapper), userMapper, commentMapper);
+        UserService userRepo = new UserService(new MockUserRepo(), userMapper, new MockPasswordService());
+        discussionRepo = new DiscussionService(mockRepo, userRepo, new DiscussionMapper(userMapper, commentMapper), userMapper);
         commentRepo = new CommentService(new MockCommentRepo(), userRepo, userMapper, commentMapper, mockRepo);
 
 
@@ -59,7 +55,7 @@ public class CommentDAOTests {
         correctDiscDAO.setSubject("Subject");
         correctDiscDAO.setDescription("Description");
             List<Category> tagList = new ArrayList<>();
-            tagList.add(Category.Health);
+            tagList.add(Category.HEALTH);
         correctDiscDAO.setTags(tagList);
 
 
@@ -68,7 +64,7 @@ public class CommentDAOTests {
 
 
     @Test
-    public void checksIfCommentHasContent() {
+    void checksIfCommentHasContent() {
         CommentDAO commentDAOMissingContent = new CommentDAO();
         commentDAOMissingContent.setPoster(correctUserDAO);
 
@@ -80,7 +76,7 @@ public class CommentDAOTests {
     }
 
     @Test
-    public void checksIfCommentHasPost() {
+    void checksIfCommentHasPost() {
         CommentDAO commentDAOMissingPost = new CommentDAO();
         commentDAOMissingPost.setPoster(correctUserDAO);
         commentDAOMissingPost.setContent("I agree");
@@ -94,7 +90,7 @@ public class CommentDAOTests {
     }
 
     @Test
-    public void checksIfCommentHasUser(){
+    void checksIfCommentHasUser(){
         CommentDAO commentDAOMissingUser = new CommentDAO();
         commentDAOMissingUser.setContent("I agree");
 
@@ -106,7 +102,7 @@ public class CommentDAOTests {
     }
 
     @Test
-    public void checksIfPostExists() {
+    void checksIfPostExists() {
         CommentDAO commentDAOPostNotInDatabase = new CommentDAO();
         commentDAOPostNotInDatabase.setContent("I agree");
         commentDAOPostNotInDatabase.setPoster(correctUserDAO);
@@ -120,7 +116,7 @@ public class CommentDAOTests {
     }
 
     @Test
-    public void checksIfUserExists() {
+    void checksIfUserExists() {
         CommentDAO commentDAOUserNotInDatabase = new CommentDAO();
         commentDAOUserNotInDatabase.setContent("I agree");
 
@@ -136,7 +132,7 @@ public class CommentDAOTests {
     }
 
     @Test
-    public void canPlaceComment() {
+    void canPlaceComment() {
         CommentDAO correctCommentDAO = new CommentDAO();
         correctCommentDAO.setPoster(correctUserDAO);
         correctCommentDAO.setContent("I agree");

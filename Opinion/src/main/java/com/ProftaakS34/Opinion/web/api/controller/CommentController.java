@@ -22,14 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/comment")
 @Api(tags = "Comments")
 public class CommentController {
-    private final DiscussionService discussionService;
+    private final String authString;
     private final CommentService commentService;
     private final CommentMapper commentMapper;
     private final AuthenticationService authenticationService;
 
     @Autowired
     public CommentController(DiscussionService discussionService, CommentService commentService, CommentMapper commentMapper, AuthenticationService authenticationService) {
-        this.discussionService = discussionService;
+        this.authString = "Authorization";
         this.commentService = commentService;
         this.commentMapper = commentMapper;
         this.authenticationService = authenticationService;
@@ -50,7 +50,7 @@ public class CommentController {
     @PostMapping("/{discussionId}")
     public ResponseEntity<CommentDTO> saveComment(
             @PathVariable long discussionId, @RequestBody CreateCommentDTO dto, HttpServletRequest request){
-        String jwt = request.getHeader("Authorization");
+        String jwt = request.getHeader(authString);
         if (!authenticationService.userLoggedIn(jwt)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         Comment comment = commentService.saveComment(discussionId, dto.getPosterId(), dto.getContent());
         CommentDTO resource = commentMapper.toDTO(comment);
@@ -74,9 +74,9 @@ public class CommentController {
     @PostMapping("/{discussionId}/reply/{commentId}")
     public ResponseEntity<CommentDTO> saveReply(
             @PathVariable long discussionId, @PathVariable long commentId, @RequestBody CreateCommentDTO dto, HttpServletRequest request){
-        String jwt = request.getHeader("Authorization");
+        String jwt = request.getHeader(authString);
         if (!authenticationService.userLoggedIn(jwt)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        Comment comment = commentService.saveReply(discussionId, dto.getPosterId(), commentId, dto.getContent());
+        Comment comment = commentService.saveReply(dto.getPosterId(), commentId, dto.getContent());
         CommentDTO resource = commentMapper.toDTO(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);
     }
@@ -96,7 +96,7 @@ public class CommentController {
     })
     @PostMapping("/{commentId}/upvote")
     public ResponseEntity upvote (@PathVariable long commentId, HttpServletRequest request) {
-        String jwt = request.getHeader("Authorization");
+        String jwt = request.getHeader(authString);
         if (!authenticationService.userLoggedIn(jwt)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         long userId = Long.parseLong(authenticationService.getId(jwt));
         commentService.upvoteComment(commentId,userId);
