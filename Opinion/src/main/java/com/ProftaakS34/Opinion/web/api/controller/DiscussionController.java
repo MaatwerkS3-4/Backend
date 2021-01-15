@@ -55,13 +55,18 @@ public class DiscussionController {
         Discussion discussion = discussionService.findDiscussionById(discussionId);
         DiscussionDTO resource;
         String jwt = request.getHeader(authString);
-        if (authenticationService.userLoggedIn(jwt)) {
-            long id = Long.parseLong(authenticationService.getId(jwt));
-            resource = discussionMapper.toDTO(discussion, id);
-        }
-        else {
+        try{
+            if (authenticationService.userLoggedIn(jwt)) {
+                long id = Long.parseLong(authenticationService.getId(jwt));
+                resource = discussionMapper.toDTO(discussion, id);
+            }
+            else {
+                resource = discussionMapper.toDTO(discussion);
+            }
+        }catch (Exception ex){
             resource = discussionMapper.toDTO(discussion);
         }
+
         return ResponseEntity.ok(resource);
     }
 
