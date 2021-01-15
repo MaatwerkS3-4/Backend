@@ -29,7 +29,6 @@ public class DiscussionServiceTests {
     private DiscussionService discussionService;
     private UserDAO correctUserDAO;
     private List<Category> discussionTags;
-    private UserService userService;
 
 
     @BeforeEach
@@ -42,7 +41,7 @@ public class DiscussionServiceTests {
         MockDiscussionRepo mockDiscussionRepo = new MockDiscussionRepo();
         DiscussionMapper discussionMapper = new DiscussionMapper(userMapper, commentMapper);
 
-        userService = new UserService(mockUserRepo, userMapper, passwordService);
+        UserService userService = new UserService(mockUserRepo, userMapper, passwordService);
         CommentService commentService = new CommentService(mockCommentRepo, userService, userMapper, commentMapper, mockDiscussionRepo);
 
         discussionService = new DiscussionService(mockDiscussionRepo, userService, commentService, discussionMapper, userMapper, commentMapper);

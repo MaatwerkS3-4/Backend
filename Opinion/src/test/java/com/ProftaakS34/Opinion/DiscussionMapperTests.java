@@ -22,10 +22,10 @@ import java.util.List;
 
 @SpringBootTest
 public class DiscussionMapperTests {
-    public DiscussionMapper mapper;
-    public DiscussionDAO discDAO;
-    public DiscussionDTO discDTO;
-    public Discussion discussion;
+    private DiscussionMapper mapper;
+    private DiscussionDAO discDAO;
+    private DiscussionDTO discDTO;
+    private Discussion discussion;
     private User user;
 
     private DiscussionMapperTests() {

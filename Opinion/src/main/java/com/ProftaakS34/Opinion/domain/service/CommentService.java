@@ -36,15 +36,6 @@ public class CommentService {
         this.discussionRepository = discussionRepository;
     }
 
-    public Comment findCommentById(Long id) {
-        if (commentRepository.findById(id).isPresent()) {
-            return commentMapper.toModel(commentRepository.findById(id).get());
-        }
-        else{
-            return null;
-        }
-    }
-
     public Comment saveComment(long discussionId, long posterId, String content) {
         //Check content and get poster
         User poster = checkCommentContent(posterId, content);
