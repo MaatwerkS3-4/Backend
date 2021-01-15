@@ -75,10 +75,9 @@ public class DiscussionService {
 
     public Discussion postDiscussion(long userId, String subject, String description, List<Category> tags) {
         if(subject == null || subject.isEmpty()) throw new IllegalArgumentException("subject is null or empty");
-        if(description == null || description.isEmpty()) throw new IllegalArgumentException("description is null or empty");
 
         if(tags.size() > 3) throw new IllegalArgumentException("More than 3 tags provided");
-        if(tags.size() < 1) throw new IllegalArgumentException("No tags provided");
+        if(tags.isEmpty()) throw new IllegalArgumentException("No tags provided");
 
         User poster = userService.findUserById(userId);
         if(poster == null) throw new IllegalArgumentException("user is null or incorrect");
