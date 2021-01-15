@@ -45,6 +45,15 @@ public class CommentService {
         }
     }
 
+    public List<Comment> findCommentsByUserId(long id){
+        List<Comment> comments = new ArrayList<>();
+        for(CommentDAO c : commentRepository.findCommentDAOSByPosterId(id)){
+            comments.add(commentMapper.toModel(c));
+        }
+
+        return comments;
+    }
+
     public Comment saveComment(long discussionId, long posterId, String content) {
         //Check content and get poster
         User poster = checkCommentContent(posterId, content);

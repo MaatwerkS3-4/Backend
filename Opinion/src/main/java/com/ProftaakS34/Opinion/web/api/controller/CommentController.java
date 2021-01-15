@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
@@ -101,5 +103,26 @@ public class CommentController {
         long userId = Long.parseLong(authenticationService.getId(jwt));
         commentService.upvoteComment(commentId,userId);
         return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    /**
+     * Get a users comments by its id
+     * @param userId the commenter's id
+     * @return a list of retrieved comments
+     */
+    @ApiOperation(
+            value="Retrieve a user's comments by it's id"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code=200, message = "List of comments has been returned")
+    })
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<CommentDTO>> getCommentsByUserId(@PathVariable long userId){
+        List<CommentDTO> resource = new ArrayList<>();
+        for(Comment c : commentService.findCommentsByUserId(userId)){
+            resource.add(commentMapper.toDTO(c));
+        }
+
+        return ResponseEntity.ok(resource);
     }
 }
